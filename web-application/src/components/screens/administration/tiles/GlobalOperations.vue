@@ -51,7 +51,8 @@
                 will erase all the changes made on this application levels with
                 the demeter extension. <br />
                 <em
-                  >This operation can ask a lot of time on large applications</em
+                  >This operation can ask a lot of time on large
+                  applications</em
                 >
               </v-col>
               <v-col cols="4" fill-height>
@@ -82,7 +83,7 @@
 </template>
 
 <script lang="ts">
-import { GroupActionController } from "@/api/demeter/GroupActionController";
+import { GroupActionController } from "@/api/demeter/groupAction.controller";
 import Vue from "vue";
 
 export default Vue.extend({
@@ -91,7 +92,7 @@ export default Vue.extend({
   computed: {
     getApplicationName() {
       return this.$store.state.applicationName;
-    },
+    }
   },
 
   mounted() {
@@ -102,14 +103,14 @@ export default Vue.extend({
     // Loadings
     loadReplication: false,
 
-    appName: "",
+    appName: ""
   }),
 
   methods: {
     replicateModuleView() {
       this.loadReplication = true;
       GroupActionController.replicateModuleView(this.appName)
-        .catch((err) => {
+        .catch(err => {
           console.error(
             "Failed to replicate the level view in module view.",
             err
@@ -118,13 +119,13 @@ export default Vue.extend({
         .finally(() => {
           this.loadReplication = false;
         });
-    },
+    }
   },
 
   watch: {
     getApplicationName(newApp) {
       this.appName = newApp;
-    },
-  },
+    }
+  }
 });
 </script>

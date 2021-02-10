@@ -190,12 +190,12 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { ApplicationRecord } from "@/api/applications/ApplicationController";
+import { ApplicationRecord } from "@/api/applications/application.controller";
 import {
   UseCaseController,
   UseCaseResult
-} from "@/api/demeter/UseCaseController";
-import { TagController, TagResult } from "@/api/demeter/TagController";
+} from "@/api/demeter/useCase.controller";
+import { TagController, TagResult } from "@/api/demeter/tag.controller";
 
 export default Vue.extend({
   name: "TagViewer",

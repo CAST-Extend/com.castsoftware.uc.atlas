@@ -1,6 +1,6 @@
 import config from "config";
 
-import neo4j, { Driver, QueryResult, ServerInfo, Session } from "neo4j-driver";
+import neo4j, { Driver, QueryResult, ServerInfo, session, Session } from "neo4j-driver";
 
 export class Neo4JAccessLayer {
   private uri: string;
@@ -25,6 +25,13 @@ export class Neo4JAccessLayer {
       session.close();
       
     }
+  }
+
+  /**
+   * Get a new session
+   */
+  public getSession() {
+    return this.driver.session();
   }
 
   /**

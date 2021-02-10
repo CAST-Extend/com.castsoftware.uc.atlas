@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { GroupActionController } from "@/api/demeter/GroupActionController";
+import { GroupActionController } from "@/api/demeter/groupAction.controller";
 
 export default {
   name: "GroupOperationsTile",

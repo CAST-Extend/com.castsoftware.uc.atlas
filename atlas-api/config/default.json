@@ -4,6 +4,15 @@
         "hotsname": "localhost"
     },
 
+    "extensions" : {
+        "artemis" : "2.1.1",
+        "demeter" : "2.3.3"
+    },
+
+    "workspace" : {
+        "profiles" : "./profiles/"
+    },
+
     "neo4j": {
         "uri":"neo4j://localhost:7687",
         "user":"neo4j",
@@ -12,6 +21,15 @@
 
     "artemis" : {
         "frameworkNode" : "ArtemisFramework"
+    },
+
+    "agent": {
+        "reload" : {
+            "frameworkAgent" : 2000,
+            "levelAgent" : 2000,
+            "moduleAgent" : 2000,
+            "architectureAgent" : 2000
+        }
     },
 
     "authentication": {

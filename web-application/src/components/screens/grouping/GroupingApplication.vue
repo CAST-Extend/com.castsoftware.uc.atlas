@@ -53,7 +53,7 @@ import LevelViewer from "@/components/screens/grouping/components/LevelViewer.vu
 import {
   GroupAction,
   GroupActionController
-} from "@/api/demeter/GroupActionController";
+} from "@/api/demeter/groupAction.controller";
 
 export default Vue.extend({
   name: "GroupingApplication",

@@ -1,0 +1,39 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "C:\\Users\\hjo\\Documents\\Github\\Oracle\\src\\logs\\error\\.d99223462d11b83aa6547c14ea31a48ae6e5667d-audit.json",
+    "files": [
+        {
+            "date": 1611260319535,
+            "name": "C:\\Users\\hjo\\Documents\\Github\\Oracle\\src\\logs\\error\\2021-01-21.error.log",
+            "hash": "389f864760b2f8e6d74d42ee4069db31"
+        },
+        {
+            "date": 1611307693135,
+            "name": "C:\\Users\\hjo\\Documents\\Github\\Oracle\\src\\logs\\error\\2021-01-22.error.log",
+            "hash": "cffa63837e99036848ae12d6171c48ec"
+        },
+        {
+            "date": 1611400718232,
+            "name": "C:\\Users\\hjo\\Documents\\Github\\Oracle\\src\\logs\\error\\2021-01-23.error.log",
+            "hash": "3135ec6bac9c3778a41c19a48c72c857"
+        },
+        {
+            "date": 1611480730283,
+            "name": "C:\\Users\\hjo\\Documents\\Github\\Oracle\\src\\logs\\error\\2021-01-24.error.log",
+            "hash": "e4dae179026a5bbb9b9a7a3ecea6f3ae"
+        },
+        {
+            "date": 1612194846519,
+            "name": "C:\\Users\\hjo\\Documents\\Github\\Oracle\\src\\logs\\error\\2021-02-01.error.log",
+            "hash": "d20b493118249478b3a0e371a674f5e4"
+        },
+        {
+            "date": 1612252162362,
+            "name": "C:\\Users\\hjo\\Documents\\Github\\Oracle\\src\\logs\\error\\2021-02-02.error.log",
+            "hash": "49c44a312291c6af44393fe05e2ae991"
+        }
+    ]
+}

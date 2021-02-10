@@ -6,30 +6,6 @@ import GroupingService from '@services/demeter/grouping.service';
 class GroupingController {
   public groupingService = new GroupingService();
 
-  /*
-  * Level Section
-  */
-
-  public getCandidateLevelsApplication = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const application = String(req.params.name);
-      const results:CandidateResults[] = await this.groupingService.getCandidatesLevel(application);
-      res.status(200).json({ data: results, message: 'candidates' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public getDemeterLevelsApplication = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const application = String(req.params.name);
-      const results:DemeterGroup[] = await this.groupingService.getGroupedDemeterLevel(application);
-      res.status(200).json({ data: results, message: 'grouped' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
 
   /*
    * Module Section

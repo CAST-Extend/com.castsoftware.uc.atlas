@@ -1,0 +1,9 @@
+{
+    "name": "Cast External",
+    "description" : "",
+    "options" : {
+        "internet" : true,
+        "repository": true,
+        "oracle": true
+    }
+}

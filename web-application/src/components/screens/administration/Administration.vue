@@ -33,14 +33,14 @@
           <Parameters></Parameters>
         </v-row>
 
-        <!-- Tag Creator Studio -->
+        <!-- Artemis Configuration -->
         <v-row v-if="tab == 2">
-          <TagStudio></TagStudio>
+          <ArtemisParameters></ArtemisParameters>
         </v-row>
 
-        <!-- Detection Explorer Studio -->
+        <!-- Tag Creator Studio -->
         <v-row v-if="tab == 3">
-          <DetectionExplorer></DetectionExplorer>
+          <TagStudio></TagStudio>
         </v-row>
       </v-container>
     </v-row>
@@ -54,7 +54,7 @@ import DemeterModuleTile from "@/components/screens/administration/tiles/Demeter
 import GlobalOperations from "@/components/screens/administration/tiles/GlobalOperations.vue";
 import Parameters from "@/components/screens/administration/steps/Parameters.vue";
 import TagStudio from "@/components/screens/administration/steps/TagStudio.vue";
-import DetectionExplorer from "@/components/screens/administration/steps/DetectionExplorer.vue";
+import ArtemisParameters from "@/components/screens/administration/steps/ArtemisParameters.vue";
 
 export default Vue.extend({
   name: "Administration",
@@ -65,7 +65,7 @@ export default Vue.extend({
     DemeterModuleTile,
     Parameters,
     TagStudio,
-    DetectionExplorer
+    ArtemisParameters
   },
 
   data: () => ({
@@ -83,14 +83,14 @@ export default Vue.extend({
         icon: "mdi-cogs"
       },
       {
+        view: "ArtemisParameters",
+        name: "Artemis Parameters",
+        icon: "mdi-cogs"
+      },
+      {
         view: "TagStudio",
         name: "Tag creator studio",
         icon: "mdi-android-studio"
-      },
-      {
-        view: "DetectionExplorer",
-        name: "Detection Explorer",
-        icon: "mdi-table-check"
       }
     ]
   })

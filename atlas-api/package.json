@@ -19,6 +19,7 @@
     "exec": "ts-node -r tsconfig-paths/register ./src"
   },
   "_moduleAliases": {
+    "@agents": "dist/agents",
     "@daos": "dist/daos",
     "@entities": "dist/entities",
     "@shared": "dist/shared",
@@ -28,7 +29,7 @@
     "@dtos": "dist/dtos",
     "@database": "dist/database",
     "@interfaces": "dist/interfaces",
-    "@exceptions" : "dist/exceptions"
+    "@exceptions": "dist/exceptions"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -69,6 +70,7 @@
     "command-line-args": "^5.1.1",
     "config": "^3.3.3",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
@@ -76,15 +78,16 @@
     "http-status-codes": "^2.1.4",
     "jet-logger": "^1.0.4",
     "jsonfile": "^6.1.0",
+    "module-alias": "^2.2.2",
     "morgan": "^1.10.0",
     "neo4j-driver": "^4.2.2",
-    "module-alias": "^2.2.2",
     "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/command-line-args": "^5.0.0",
     "@types/config": "0.0.38",
     "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.9",
     "@types/express": "^4.17.11",
     "@types/find": "^0.2.1",
     "@types/fs-extra": "^9.0.6",

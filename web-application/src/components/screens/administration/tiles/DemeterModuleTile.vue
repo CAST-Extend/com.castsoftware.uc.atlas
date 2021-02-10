@@ -76,7 +76,8 @@ import {
   GroupingController,
   Level5Group,
   ModuleGroup
-} from "@/api/demeter/GroupingController";
+} from "@/api/demeter/grouping.controller";
+import { LevelController } from "@/api/demeter/grouping/level.controller";
 import Vue from "vue";
 
 export default Vue.component("DemeterModuleTile", {
@@ -154,7 +155,7 @@ export default Vue.component("DemeterModuleTile", {
     rename(groupName: string, newName: string) {
       this.loadingRename = true;
       if (groupName != newName) {
-        GroupingController.renameLevel(this.appName, groupName, newName)
+        LevelController.renameLevel(this.appName, groupName, newName)
           .then((res: boolean) => {
             console.log("Successfuly renamed the level.", res);
             this.getDemeterModules();

@@ -125,8 +125,10 @@ class DetectionService {
     // Add Pending detection
     this.pendingApplicationDetection.push(detection);
 
-    const promise: Promise<Framework[]> = this.neo4jAl
-      .executeWithParameters(request, params)
+    const session = this.neo4jAl.getSession();
+    const transaction = session.beginTransaction();
+
+    const promise: Promise<Framework[]> = transaction.run(request, params)
       .then((res: QueryResult) => {
         logger.info(`Results of the detection : ${res.records.length}`);
         logger.info(`1st Results of the detection `, res.records[0]);
@@ -171,7 +173,7 @@ class DetectionService {
     // Make the promise above cancellable for the user
     const cancellablePromise: CancellablePromise<
       Framework[]
-    > = new CancellablePromise(appName, language, promise);
+    > = new CancellablePromise(appName, language, transaction, promise);
     this.pendingPromiseDetection.push(cancellablePromise);
 
     return true;

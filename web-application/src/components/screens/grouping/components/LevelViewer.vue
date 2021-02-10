@@ -35,7 +35,8 @@
 import {
   GroupingController,
   Level5Group
-} from "@/api/demeter/GroupingController";
+} from "@/api/demeter/grouping.controller";
+import { LevelController } from "@/api/demeter/grouping/level.controller";
 import GroupTile from "@/components/screens/grouping/tiles/GroupTile.vue";
 import Vue from "vue";
 
@@ -69,7 +70,7 @@ export default Vue.component("LevelViewer", {
      */
     getLevelGroups() {
       this.loadingGroups = false;
-      GroupingController.getAllLevels(this.applicationName)
+      LevelController.getAllLevels(this.applicationName)
         .then((res: Level5Group[]) => {
           this.loadingGroups = true;
           this.levels = res;
@@ -93,13 +94,15 @@ export default Vue.component("LevelViewer", {
       if (!group.demeterGroup) return;
 
       this.loadingUndoGroup = true;
-      GroupingController.undoGroupedLevel5(appName, group.name)
-        .then((res: string) => {
-          console.log(
-            `Grouping undone for level ${group} on application ${appName}.`,
-            res
+      LevelController.undoGroupedLevel5(appName, group.name)
+        .then((res: boolean) => {
+          if(res) {
+            this.getLevelGroups();
+          } else {
+            console.log(
+            `Failed to undo the grouping undone for level ${group} on application ${appName}.`
           );
-          this.getLevelGroups();
+          }
         })
         .catch(err => {
           console.error(
@@ -124,18 +127,22 @@ export default Vue.component("LevelViewer", {
         if (uniqueNames.indexOf(groupName) == -1) uniqueNames.push(groupName);
       });
       return uniqueNames;
+    },
+
+    refresh() {
+      this.getLevelGroups();
     }
   },
 
   mounted() {
     this.applicationName = this.$store.state.applicationName;
-    this.getLevelGroups();
+    this.refresh();
   },
 
   watch: {
     getApplicationName(newApp) {
       this.applicationName = newApp;
-      this.getLevelGroups();
+      this.refresh();
     }
   }
 });

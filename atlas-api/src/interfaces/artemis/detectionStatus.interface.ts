@@ -1,3 +1,4 @@
+import { Transaction } from "neo4j-driver";
 import { Framework } from "./framework.interface";
 
 export enum DetectionStatus {
@@ -44,15 +45,19 @@ export class CancellablePromise<T> {
   public promise: Promise<T>;
   public application: string; 
   public language: string;
+  public transaction: Transaction;
 
-  constructor(application:string, language:string, wrappedPromise:Promise<T>) {
+  constructor(application:string, language:string, transaction: Transaction, wrappedPromise:Promise<T>) {
+    this.transaction = transaction;
     this.application = application;
     this.language = language;
     this.promise = new Promise((resolve, reject) => {
         this.cancel = resolve;
         wrappedPromise.then((res:T) => {
+          this.transaction.commit();
           resolve(res);
         }).catch((err) => {
+          this.transaction.rollback();
           reject(err);
         })
     });

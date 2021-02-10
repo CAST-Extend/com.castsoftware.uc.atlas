@@ -42,8 +42,16 @@
               for more informations.</span
             >
           </div>
+          <v-divider></v-divider>
+
+          <div>
+            <p class="mt-2 text-subtitle-1">Options :</p>
+            <v-switch
+              v-model="switchIternalUse"
+              label="Internal use ( CAST User )"
+            ></v-switch>
+          </div>
         </v-card-text>
-        <v-divider class="mt-12"></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="primary" text @click="save">
@@ -69,7 +77,9 @@ export default Vue.extend({
     showLogin: true,
     show1: false,
     uri: Configuration.getProperties().neo4jUri,
-    credentials: {} as Credentials
+    credentials: {} as Credentials,
+
+    switchIternalUse: false
   }),
 
   methods: {

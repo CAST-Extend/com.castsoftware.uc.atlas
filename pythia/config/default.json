@@ -1,0 +1,19 @@
+{
+    "neo4j": {
+        "uri":"neo4j://localhost:7687",
+        "user":"neo4j",
+        "password":"imaging"
+    },
+
+    "artemis" : {
+        "frameworkNode" : "ArtemisFramework"
+    },
+
+    "authentication": {
+        "reloadDelay" : 30000
+    },
+
+    "configuration": {
+        "port": 3003
+    }
+}

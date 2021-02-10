@@ -9,7 +9,7 @@ import store from "./store";
 
 import { Neo4JAccessLayer } from "./api/Neo4jAccessLayer";
 import { Component } from "vue-router/types/router";
-import { DaemonController } from "./api/daemon/DaemonController";
+import { DaemonController } from "./api/daemon/daemon.controler";
 
 Vue.config.productionTip = false;
 Vue.use(Vuex);

@@ -1,0 +1,9 @@
+{
+    "name": "Cast Internal",
+    "description" : "",
+    "options" : {
+        "internet" : true,
+        "repository": true,
+        "oracle": true
+    }
+}

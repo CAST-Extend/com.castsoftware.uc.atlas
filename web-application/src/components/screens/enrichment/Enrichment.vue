@@ -20,20 +20,20 @@
         <component :is="items[tab].view"></component>
       </v-container>
     </v-row>
-  </v-container>
 
-  <!-- <v-container fluid>
-    <v-row class="px-8 mb-8 my-4">
-      <v-col class="mx-auto" sm="12" lg="12" >
-        <GroupingTile class="mx-auto"> </GroupingTile>
-      </v-col>
-    </v-row>
-    <v-row class="px-8 my-8">
-      <v-col class="mx-auto" sm="12" lg="12">
-        <TagApplication class="mx-auto"></TagApplication>
-      </v-col>
-    </v-row>
-  </v-container> -->
+    <div id="notInstalledDemter" v-if="diplayNotInstalled">
+      <h2 class="ma-auto text--h2" id="Message">
+        The Demeter extension is not installed on this server.<br />
+        You must install the Demeter extension to continue on this section.<br />
+        Please install the extension from
+        <a
+          href="https://extend.castsoftware.com/#/extension?id=com.castsoftware.uc.artemis&version=2.0.0"
+        >
+          CAST Extend
+        </a>
+      </h2>
+    </div>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -41,6 +41,7 @@ import GroupingTile from "@/components/screens/enrichment/tiles/GroupingTile.vue
 // import DemeterGroupTile from "@/components/screens/main/tiles/DemeterGroupTile.vue";
 import TagViewer from "@/components/screens/enrichment/steps/TagViewer.vue";
 import Vue from "vue";
+import { AtlasController } from "@/api/atlas/atlas.controller";
 
 export default Vue.extend({
   name: "Enrichment",
@@ -61,6 +62,7 @@ export default Vue.extend({
     loading: true,
     groupRecord: undefined as unknown,
     applicationName: "" as string,
+    diplayNotInstalled: false,
 
     // Navigation
     tab: 0,
@@ -80,6 +82,18 @@ export default Vue.extend({
 
   mounted() {
     this.applicationName = this.$store.state.applicationName;
+
+    AtlasController.getDemeterVersion()
+      .then(async (version: string) => {
+        this.version = version;
+      })
+      .catch(err => {
+        console.error(
+          "The Demeter extension wasn't detected. The functionnalities will be limited. Please install the Artemis extension",
+          err
+        );
+        this.diplayNotInstalled = true;
+      });
   },
 
   methods: {},
@@ -91,3 +105,27 @@ export default Vue.extend({
   }
 });
 </script>
+
+<style>
+#notInstalledDemter {
+  min-width: 100%;
+  min-height: 100%;
+  position: absolute;
+
+  top: 0;
+  right: 0;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+#notInstalledDemter #Message {
+  display: block;
+  color: white;
+  text-align: center;
+  position: absolute;
+
+  top: 40%;
+  right: 0;
+  width: 100%;
+}
+</style>

@@ -131,7 +131,8 @@
 import {
   GroupingController,
   Level5Group
-} from "@/api/demeter/GroupingController";
+} from "@/api/demeter/grouping.controller";
+import { LevelController } from "@/api/demeter/grouping/level.controller";
 import Vue from "vue";
 
 export default Vue.component("DemeterLevelsTile", {
@@ -208,13 +209,15 @@ export default Vue.component("DemeterLevelsTile", {
      */
     undoGroup(groupName: string) {
       this.loadingUndoGroup = true;
-      GroupingController.undoGroupedLevel5(this.appName, groupName)
-        .then((res: string) => {
-          console.log(
-            `Grouping undone for level ${groupName} on application ${this.appName}.`,
-            res
+      LevelController.undoGroupedLevel5(this.appName, groupName)
+        .then((res: boolean) => {
+          if(res) {
+            this.getDemeterGroups();
+          } else {
+            console.error(
+            `Failed to undo the grouping for level ${groupName} on application ${this.appName}.`
           );
-          this.getDemeterGroups();
+          }
         })
         .catch(err => {
           console.error(
@@ -233,7 +236,7 @@ export default Vue.component("DemeterLevelsTile", {
     rename(groupName: string, newName: string) {
       this.loadingRename = true;
       if (groupName != newName) {
-        GroupingController.renameLevel(this.appName, groupName, newName)
+        LevelController.renameLevel(this.appName, groupName, newName)
           .then((res: boolean) => {
             console.log("Successfuly renamed the level.", res);
             this.getDemeterGroups();
