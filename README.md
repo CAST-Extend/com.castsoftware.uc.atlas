@@ -51,7 +51,8 @@ Open a command prompt in the Atlas directory and run `.\run.bat`
 - To launch the server, you can now execute in the same console `npm run start`
 
 ## How to use the plateform
-(Coming soon)
+
+Please refer to the Wiki of this repository for more information on how to use the extension
 
 ## Known issues
 None
@@ -59,12 +60,17 @@ None
 ## Roadmap
 
 ### Future releases
-- Atlas installer & service deployer
-- Better API binding 
-- Better Artemis integration and functionnalities
-- Documentation: Accelerate application refactoring with Atlas
+- More documentation 
+- More actions of Demeter ( Statistic generator ) 
+- More agents
 
 ## Release Notes
+### Version 2.0.0
+- Better Artemis support ( More screens, and configuration)
+- Bug fixing
+- Better API
+- More documentation !
+
 ### Version 1.0.0
 - Atlas platform
 - Artemis binding 
