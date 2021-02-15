@@ -23,7 +23,7 @@ export default class ArtifactService {
     appName: string,
     language: string
   ): Promise<Artifact[]> {
-    const req: string = `CALL artemis.api.breakdown.get($appName, $language)`;
+    const req = `CALL artemis.api.breakdown.get($appName, $language)`;
     try {
       const val = await this.neo4jAl.executeWithParameters(req, {
         appName: appName,
@@ -65,10 +65,10 @@ export default class ArtifactService {
   ): Promise<Artifact[]> {
 
     const allArtifacts : Artifact[] = await this.getArtifactsList(appName, language);
-    let tree : Artifact[] = [];
+    const tree : Artifact[] = [];
 
     for (const key in allArtifacts) {
-      let elem = allArtifacts[key];
+      const elem = allArtifacts[key];
       if(elem.parentId < 0) {
         tree.push(ArtifactService.recursiveInsert(elem, allArtifacts))
       }

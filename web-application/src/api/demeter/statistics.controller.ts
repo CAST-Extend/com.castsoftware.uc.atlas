@@ -54,6 +54,8 @@ export class StatisticsController {
   public static async getConfigurationStatistics(
     applicationName: string
   ): Promise<StatisticPercentageResult[]> {
+    if (!applicationName || applicationName.length == 0) return;
+
     const requests = [
       {
         title: "Internality ",

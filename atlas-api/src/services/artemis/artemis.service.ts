@@ -9,7 +9,7 @@ class ArtemisService {
      * Get the version of Artemis
      */
     public async getVersion(): Promise<string> {
-        const req: string = `CALL artemis.version()`;
+        const req = `CALL artemis.version()`;
     
         try {
           const val = await this.neo4jAl.execute(req);

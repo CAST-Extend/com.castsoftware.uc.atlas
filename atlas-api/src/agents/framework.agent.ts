@@ -10,6 +10,10 @@ import { QueryResult } from "neo4j-driver";
  */
 export default class FrameworkAgent extends AAgent {
 
+  async getPrefix(): Promise<string> {
+    return this.tagService.getCustomFrameworksTag();
+  }
+
   getAgentName(): string {
     return "Framework"
   }

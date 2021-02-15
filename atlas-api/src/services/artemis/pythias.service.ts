@@ -9,7 +9,7 @@ class PythiaService {
      * Get the last update of the local database ( as a Timestamp )
      */
     public async getLastUpdateBase() {
-        const req: string = `CALL artemis.api.get.last.update()`;
+        const req = `CALL artemis.api.get.last.update()`;
     
         try {
           const val = await this.neo4jAl.execute(req);
@@ -29,7 +29,7 @@ class PythiaService {
      * Get the last update of the Pytha ( as a Timestamp )
      */
     public async getLastUpdatePythia() : Promise<number> {
-        const req: string = `CALL artemis.api.pythia.get.lastUpdate()`;
+        const req = `CALL artemis.api.pythia.get.lastUpdate()`;
     
         try {
           const val = await this.neo4jAl.execute(req);
@@ -50,7 +50,7 @@ class PythiaService {
      */
     public async pullFramworks() : Promise<number> {
         
-        const req: string = `CALL artemis.api.pythia.pull.frameworks()`;
+        const req = `CALL artemis.api.pythia.pull.frameworks()`;
     
         try {
           const val = await this.neo4jAl.execute(req);
@@ -70,7 +70,7 @@ class PythiaService {
      * Get the list of supported languages 
      */
     public async getPullForecast(): Promise<number> {
-      const req: string = `CALL artemis.api.pythia.pull.frameworks.forecast()`;
+      const req = `CALL artemis.api.pythia.pull.frameworks.forecast()`;
     
         try {
           const val = await this.neo4jAl.execute(req);

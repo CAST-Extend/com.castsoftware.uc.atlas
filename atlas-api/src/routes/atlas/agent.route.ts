@@ -19,6 +19,8 @@ class AgentRoute implements Route {
     this.router.get(`${this.path}/:name/status`, this.agentController.getAgentStatus);
     this.router.get(`${this.path}/:name/start`, this.agentController.startAgent);
     this.router.get(`${this.path}/:name/stop`, this.agentController.stopAgent);
+    this.router.get(`${this.path}/:name/prefix`, this.agentController.getPrefix);
+    this.router.get(`${this.path}/:name/force`, this.agentController.force);
   }
 }
 

@@ -124,7 +124,7 @@ export default Vue.component("DemeterGroupTile", {
      */
     getDemeterGroups() {
       this.loadingGroups = false;
-      GroupingController.getDemeterGroupedLevels5(this.appName)
+      LevelController.getDemeterLevels(this.appName)
         .then((res: Level5Group[]) => {
           this.loadingGroups = true;
           this.demeterGroups = res;
@@ -145,10 +145,10 @@ export default Vue.component("DemeterGroupTile", {
       this.loadingUndoGroup = true;
       LevelController.undoGroupedLevel5(appName, groupName)
         .then((res: boolean) => {
-          if(res) {
+          if (res) {
             this.getDemeterGroups();
           } else {
-            console.error("Failed to undo the group.")
+            console.error("Failed to undo the group.");
           }
         })
         .catch(err => {

@@ -146,10 +146,11 @@ export class FrameworkController {
       throw error;
     }
   }
-  
+
   // Get the list of Framework to validate
-  public static async getToValidateFrameworks() : Promise<Framework[]> {
-    const url = FrameworkController.API_BASE_URL + "/api/artemis/frameworks/toValidate";
+  public static async getToValidateFrameworks(): Promise<Framework[]> {
+    const url =
+      FrameworkController.API_BASE_URL + "/api/artemis/frameworks/toValidate";
     try {
       const res = await axios.get(url);
 
@@ -159,7 +160,9 @@ export class FrameworkController {
           return apiResponse.data;
         }
       } else {
-        throw new Error(` Bad status. Status (${res.status}). Query-Content : ${res.data}`);
+        throw new Error(
+          ` Bad status. Status (${res.status}). Query-Content : ${res.data}`
+        );
       }
     } catch (err) {
       console.error(
@@ -169,7 +172,6 @@ export class FrameworkController {
       throw err;
     }
   }
-
 
   // Get a batch of framework ( filter by internal type possible )
   public static async getFrameworkBatch(

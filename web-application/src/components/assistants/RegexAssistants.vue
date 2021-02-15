@@ -1,6 +1,6 @@
 <template>
-  <v-card min-height="300px" class="pa-3">
-    <v-card-title> Regex Assistants </v-card-title>
+  <v-card min-height="300px" class="pa-3" disabled>
+    <v-card-title> Regex Assistants ( Coming in next release )</v-card-title>
     <v-card-subtitle
       >Separate the objects in the applications matching theses
       rules.</v-card-subtitle

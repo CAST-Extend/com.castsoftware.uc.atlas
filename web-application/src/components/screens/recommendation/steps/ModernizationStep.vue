@@ -53,15 +53,16 @@
                 :key="i"
                 cols="12"
                 sm="6"
-                md="4"
-                lg="3"
+                md="6"
+                lg="4"
+                xl="3"
               >
                 <v-card min-height="200px">
                   <v-card-title class="subheading font-weight-bold">
                     <v-row style="height: 60px">
                       <v-col cols="8">{{ item.title }}</v-col>
                       <v-col cols="4"
-                        ><v-chip class="">
+                        ><v-chip class="px-2">
                           {{ item.category }}
                         </v-chip></v-col
                       >
@@ -193,9 +194,13 @@ export default Vue.extend({
 
   mounted() {
     this.application = this.$store.state.applicationName;
-    this.items = GroupActionController.getModernizationActions(
-      this.application
-    );
+    GroupActionController.getModernizationActions(this.application)
+      .then((res: GroupAction[]) => {
+        this.items = res;
+      })
+      .catch(err => {
+        console.error("Failed to retrieve the grouping actions.", err);
+      });
   },
 
   data: () => ({

@@ -110,14 +110,13 @@ export class RegexNodeController {
     }
   }
 
-
   /**
-   * Test a regex node 
+   * Test a regex node
    * @param id Id of the regex node to test
    */
-  public static async getRegexRequest(id:number) : Promise<string> {
+  public static async getRegexRequest(id: number): Promise<string> {
     const url =
-    RegexNodeController.API_BASE_URL + `/api/artemis/regexes/${id}/request`;
+      RegexNodeController.API_BASE_URL + `/api/artemis/regexes/${id}/request`;
 
     try {
       const res = await axios.get(url);
@@ -125,7 +124,9 @@ export class RegexNodeController {
         const apiResponse: ApiResponse = res.data;
         return String(apiResponse.data);
       } else {
-        throw new Error(`Failed to get the request the Regex Node. Status (${res.status}) : Error : ${res.data}`);
+        throw new Error(
+          `Failed to get the request the Regex Node. Status (${res.status}) : Error : ${res.data}`
+        );
       }
     } catch (error) {
       console.error(
@@ -164,9 +165,9 @@ export class RegexNodeController {
 
   public static async getAllNodesAsTree(): Promise<ApiRegexNode[]> {
     const nodes: ApiRegexNode[] = await RegexNodeController.getAllNode();
-    const resultTree = nodes.filter((x) => x.parentId == -1); // Init the tree
+    const resultTree = nodes.filter(x => x.parentId == -1); // Init the tree
 
-    const toVisit: ApiRegexNode[] = nodes.filter((x) => x.parentId == -1);
+    const toVisit: ApiRegexNode[] = nodes.filter(x => x.parentId == -1);
     const visited: ApiRegexNode[] = [];
 
     for (let index = 0; index < toVisit.length; index++) {
@@ -188,5 +189,4 @@ export class RegexNodeController {
 
     return resultTree;
   }
-
 }

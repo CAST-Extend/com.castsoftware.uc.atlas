@@ -4,6 +4,10 @@ import config from "config";
 import AAgent from "./agent.abstract";
 
 export default class LevelAgent extends AAgent {
+  async getPrefix(): Promise<string> {
+    return this.tagService.getCustomLevelTag();
+  }
+
   getAgentName(): string {
     return "Level";
   }

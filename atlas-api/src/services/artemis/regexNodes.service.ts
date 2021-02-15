@@ -29,13 +29,13 @@ class RegexNodesService {
    * Get the list of supported languages
    */
   public async getAllNodesAsTree(): Promise<RegexNode[]> {
-    const req: string = `CALL artemis.api.regex.get.all.nodes()`;
+    const req = `CALL artemis.api.regex.get.all.nodes()`;
 
     try {
       const val = await this.neo4jAl.execute(req);
       if (!val.records || val.records.length == 0) return [];
 
-      let nodes: RegexNode[] = [];
+      const nodes: RegexNode[] = [];
       for (let index = 0; index < val.records.length; index++) {
         const element = convertRecordToRegexNode(val.records[index]);
         nodes.push(element);
@@ -56,7 +56,7 @@ class RegexNodesService {
    * @param node Node to add
    */
   public async addRegexNode(node: CreateRegexNodeDto): Promise<RegexNode> {
-    const req: string = `CALL artemis.api.regex.create.node($name, $regexes, $internalTypes, $framework, $category, $parentId)`;
+    const req = `CALL artemis.api.regex.create.node($name, $regexes, $internalTypes, $framework, $category, $parentId)`;
 
     try {
       console.log("Adding item :", node);
@@ -80,7 +80,7 @@ class RegexNodesService {
    */
   public async updateRegexNode(node: CreateRegexNodeDto): Promise<RegexNode> {
     console.log("Updating with parent : ", node);
-    const req: string = `CALL artemis.api.regex.update.node($id, $name, $regexes, $internalTypes, $framework, $category, $parentId)`;
+    const req = `CALL artemis.api.regex.update.node($id, $name, $regexes, $internalTypes, $framework, $category, $parentId)`;
 
     try {
       const val = await this.neo4jAl.executeWithParameters(req, node);
@@ -98,7 +98,7 @@ class RegexNodesService {
   }
 
   public async removeRegexNode(idNode: number): Promise<boolean> {
-    const req: string = `CALL artemis.api.regex.remove.node.byId($idNode)`;
+    const req = `CALL artemis.api.regex.remove.node.byId($idNode)`;
     try {
       const val = await this.neo4jAl.executeWithParameters(req, {
         idNode: idNode,
@@ -115,7 +115,7 @@ class RegexNodesService {
   }
 
   public async testRegexNode(idNode: number): Promise<number> {
-    const req: string = `CALL artemis.api.regex.test($idNode)`;
+    const req = `CALL artemis.api.regex.test($idNode)`;
     try {
       const val = await this.neo4jAl.executeWithParameters(req, {
         idNode: idNode,
@@ -132,7 +132,7 @@ class RegexNodesService {
   }
 
   public async getRegexRequest(idNode: number): Promise<string> {
-    const req: string = `CALL artemis.api.regex.get.request($idNode)`;
+    const req = `CALL artemis.api.regex.get.request($idNode)`;
     try {
       const val = await this.neo4jAl.executeWithParameters(req, {
         idNode: idNode,

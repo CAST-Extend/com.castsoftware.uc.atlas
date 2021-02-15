@@ -75,9 +75,14 @@ export default Vue.extend({
 
   methods: {
     getActionList() {
-      this.popularOperations = GroupActionController.getConfigurationActions(
-        this.application
-      );
+      GroupActionController.getConfigurationActions(this.application)
+        .then((res: GroupAction[]) => {
+          this.popularOperations = res;
+          this.filteredPopularOperations = res;
+        })
+        .catch(err => {
+          console.error("Failed to retrieve the grouping actions", err);
+        });
     }
   },
 

@@ -1,4 +1,3 @@
-//CALL dbms.procedures() YIELD name, description WHERE name contains "demeter.getVersion" RETURN name, description
 import { QueryResult } from "neo4j-driver";
 import { Neo4JAccessLayer } from "../Neo4jAccessLayer";
 

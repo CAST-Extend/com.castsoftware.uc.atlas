@@ -142,7 +142,7 @@ export default class ConfigurationController {
   public static async getDemeterWorkspace(): Promise<string> {
     const url =
       ConfigurationController.API_BASE_URL +
-      `/api/configuration/demeter/artemis/workspace`;
+      `/api/configuration/parameters/demeter/workspace`;
 
     try {
       const res = await axios.get(url);
@@ -166,7 +166,7 @@ export default class ConfigurationController {
   ): Promise<string> {
     const url =
       ConfigurationController.API_BASE_URL +
-      `/api/configuration/demeter/artemis/workspace`;
+      `/api/configuration/parameters/demeter/workspace`;
 
     try {
       const res = await axios.post(url, { workspace: newWorkspace });

@@ -18,7 +18,12 @@
     </v-card-subtitle>
     <v-card-text>
       <v-container>
-        <v-data-table :headers="headers" :items="items" sort-by="calories" class="elevation-1">
+        <v-data-table
+          :headers="headers"
+          :items="items"
+          sort-by="calories"
+          class="elevation-1"
+        >
           <template v-slot:top>
             <v-toolbar flat>
               <v-toolbar-title>Category manager</v-toolbar-title>
@@ -147,31 +152,31 @@ export default Vue.extend({
         text: "Name of the category",
         align: "start",
         sortable: true,
-        value: "name",
+        value: "name"
       },
       {
         text: "Icon URL",
-        value: "iconURL",
+        value: "iconURL"
       },
-      { text: 'Actions', value: 'actions', sortable: false },
+      { text: "Actions", value: "actions", sortable: false }
     ],
 
     items: [],
     editedIndex: -1,
     editedItem: {
       name: "",
-      iconUrl: "",
+      iconUrl: ""
     } as Category,
     defaultItem: {
       name: "",
-      iconUrl: "",
-    } as Category,
+      iconUrl: ""
+    } as Category
   }),
 
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
-    },
+    }
   },
 
   watch: {
@@ -180,7 +185,7 @@ export default Vue.extend({
     },
     dialogDelete(val) {
       val || this.closeDelete();
-    },
+    }
   },
 
   mounted() {
@@ -193,7 +198,7 @@ export default Vue.extend({
         .then((res: Category[]) => {
           this.items = res;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log("Failed to retrieve the list of Category", err);
         });
     },
@@ -217,7 +222,7 @@ export default Vue.extend({
           this.snackbarInfo = true;
           this.initialize();
         })
-        .catch((err) => {
+        .catch(err => {
           this.textSnackBar = `Failed to delete the Category. Error: ${err}`;
           this.snackbarInfo = true;
         });
@@ -249,7 +254,7 @@ export default Vue.extend({
             this.snackbarInfo = true;
             this.initialize();
           })
-          .catch((err) => {
+          .catch(err => {
             this.textSnackBar = `Failed to udpdate the Category. Error: ${err}`;
             this.snackbarInfo = true;
           });
@@ -260,13 +265,13 @@ export default Vue.extend({
             this.snackbarInfo = true;
             this.initialize();
           })
-          .catch((err) => {
+          .catch(err => {
             this.textSnackBar = `Failed to add the Category. Error: ${err}`;
             this.snackbarInfo = true;
           });
       }
       this.close();
-    },
-  },
+    }
+  }
 });
 </script>

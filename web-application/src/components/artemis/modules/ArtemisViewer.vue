@@ -207,6 +207,7 @@ import {
   DetectionResult,
   Framework
 } from "@/api/interface/ApiArtemis.interface";
+import ConfigurationController from "@/api/configuration/configuration.controller";
 
 export default Vue.extend({
   name: "ActionTileViewer",
@@ -292,7 +293,7 @@ export default Vue.extend({
 
       this.onlineMode = await ArtemisController.getOnlineMode();
       this.repositoryMode = await ArtemisController.getRepositoryMode();
-      this.workspacePath = await ArtemisController.getWorkspace();
+      this.workspacePath = await ConfigurationController.getArtemisWorkspace();
 
       await ArtemisController.getSupportedLanguages()
         .then((res: string[]) => {

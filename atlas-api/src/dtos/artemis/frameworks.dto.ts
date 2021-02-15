@@ -26,7 +26,7 @@ export class CreateFrameworkDto {
   public percentageOfDetection: string;
 
   @IsDecimal()
-  public numberOfDetection: number = 0;
+  public numberOfDetection = 0;
   
   
 }

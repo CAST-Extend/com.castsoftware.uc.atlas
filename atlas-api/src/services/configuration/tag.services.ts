@@ -7,18 +7,17 @@ class TagService {
   private neo4jAl: Neo4JAccessLayer = Neo4JAccessLayer.getInstance();
 
   /**
-   * Get the version of Artemis
+   * Get the prefix of Custom tags
    */
   public async getCustomFrameworksTag(): Promise<string> {
     try {
-      const request: string = "CALL artemis.get.framework.tag()";
+      const request = "CALL artemis.get.framework.tag()";
 
       const results: QueryResult = await this.neo4jAl.execute(request);
       if (!results.records || results.records.length == 0)
         throw new Error("Results not correctly formatted");
 
-      const tag: string = String(results.records[0].get(0));
-      return tag;
+      return String(results.records[0].get(0));
     } catch (err) {
       logger.error("Failed to retrieve the custom frameworks tag...", err);
       throw new HttpException(500, "Internal error");
@@ -30,14 +29,13 @@ class TagService {
    */
   public async getCustomLevelTag(): Promise<string> {
     try {
-      const request: string = "CALL demeter.api.get.prefix.level()";
+      const request = "CALL demeter.api.get.prefix.level()";
 
       const results: QueryResult = await this.neo4jAl.execute(request);
       if (!results.records || results.records.length == 0)
         throw new Error("Results not correctly formatted");
 
-      const tag: string = String(results.records[0].get(0));
-      return tag;
+      return String(results.records[0].get(0));
     } catch (err) {
       logger.error("Failed to retrieve the custom level tag...", err);
       throw new HttpException(500, "Internal error");
@@ -45,20 +43,36 @@ class TagService {
   }
 
   /**
-   * Get the version of Artemis
+   * Get the tag prefix of the modules
    */
   public async getCustomModuleTag(): Promise<string> {
     try {
-      const request: string = "CALL demeter.api.get.prefix.module()";
+      const request = "CALL demeter.api.get.prefix.module()";
 
       const results: QueryResult = await this.neo4jAl.execute(request);
       if (!results.records || results.records.length == 0)
         throw new Error("Results not correctly formatted");
 
-      const tag: string = String(results.records[0].get(0));
-      return tag;
+      return String(results.records[0].get(0));
     } catch (err) {
       logger.error("Failed to retrieve the custom module tag...", err);
+      throw new HttpException(500, "Internal error");
+    }
+  }
+
+    /**
+   * Get the tag prefix of the Architecture
+   */
+  public async getCustomArchitectureTag(): Promise<string> {
+    try {
+      const request = "CALL demeter.api.get.prefix.architecture()";
+
+      const results: QueryResult = await this.neo4jAl.execute(request);
+      if (!results.records || results.records.length == 0)
+        throw new Error("Results not correctly formatted");
+      return String(results.records[0].get(0));
+    } catch (err) {
+      logger.error("Failed to retrieve the custom architecture tag...", err);
       throw new HttpException(500, "Internal error");
     }
   }

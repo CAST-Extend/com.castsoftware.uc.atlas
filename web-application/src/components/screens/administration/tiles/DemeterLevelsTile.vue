@@ -128,10 +128,7 @@
 </template>
 
 <script lang="ts">
-import {
-  GroupingController,
-  Level5Group
-} from "@/api/demeter/grouping.controller";
+import { Level5Group } from "@/api/demeter/grouping.controller";
 import { LevelController } from "@/api/demeter/grouping/level.controller";
 import Vue from "vue";
 
@@ -190,7 +187,7 @@ export default Vue.component("DemeterLevelsTile", {
      */
     getDemeterGroups() {
       this.loadingGroups = false;
-      GroupingController.getDemeterGroupedLevels5(this.appName)
+      LevelController.getDemeterLevels(this.appName)
         .then((res: Level5Group[]) => {
           this.loadingGroups = true;
           this.demeterGroups = res;
@@ -211,12 +208,12 @@ export default Vue.component("DemeterLevelsTile", {
       this.loadingUndoGroup = true;
       LevelController.undoGroupedLevel5(this.appName, groupName)
         .then((res: boolean) => {
-          if(res) {
+          if (res) {
             this.getDemeterGroups();
           } else {
             console.error(
-            `Failed to undo the grouping for level ${groupName} on application ${this.appName}.`
-          );
+              `Failed to undo the grouping for level ${groupName} on application ${this.appName}.`
+            );
           }
         })
         .catch(err => {

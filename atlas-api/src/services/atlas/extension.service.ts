@@ -8,10 +8,10 @@ class ExtensionService {
         const demeter = new DemeterService();
         const version:string = await demeter.getVersion();
 
-        const numVersion:number = Number(version.replace(".", ""));
+        const numVersion = Number(version.replace(".", ""));
 
         const minVersionString:string = String(config.get("extensions.demeter")).replace(".", "");
-        const minVersionNum:number = Number(minVersionString);
+        const minVersionNum = Number(minVersionString);
 
         if(numVersion < minVersionNum) {
             logger.warn(`The detected version of Demeter is ${version}. The minimal version required to work properly is ${minVersionString}`);
@@ -25,10 +25,10 @@ class ExtensionService {
         const artemis = new ArtemisService();
         const version:string = await artemis.getVersion();
 
-        const numVersion:number = Number(version.replace(".", ""));
+        const numVersion = Number(version.replace(".", ""));
 
         const minVersionString:string = String(config.get("extensions.artemis")).replace(".", "");
-        const minVersionNum:number = Number(minVersionString);
+        const minVersionNum = Number(minVersionString);
 
         if(numVersion < minVersionNum) {
             logger.warn(`The detected version of Artemis is ${version}. The minimal version required to work properly is ${minVersionString}`);

@@ -96,12 +96,12 @@ export default Vue.component("LevelViewer", {
       this.loadingUndoGroup = true;
       LevelController.undoGroupedLevel5(appName, group.name)
         .then((res: boolean) => {
-          if(res) {
+          if (res) {
             this.getLevelGroups();
           } else {
             console.log(
-            `Failed to undo the grouping undone for level ${group} on application ${appName}.`
-          );
+              `Failed to undo the grouping undone for level ${group} on application ${appName}.`
+            );
           }
         })
         .catch(err => {

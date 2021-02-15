@@ -72,6 +72,22 @@ export class AgentManager {
     }
 
     /**
+     * Get the prefix used by the agent
+     * @param agent Name of the agent
+     */
+    public async getAgentPrefix(agent:Agent) : Promise<string> {
+        return await this.getAgent(agent).getPrefix();
+    }
+
+    /**
+     * Force the action of the agent
+     * @param agent Name of the agent 
+     */
+    public async forceRun(agent:Agent) : Promise<void> {
+        await this.getAgent(agent).group();
+    }
+
+    /**
      * Initialize the different agents
      */
     public initialize() {

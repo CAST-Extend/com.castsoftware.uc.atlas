@@ -40,7 +40,7 @@ class FrameworksController {
       let name = String(req.params.name);
       name = name.replace("+", " ");
 
-      let resultsSearch: Framework[] = await this.frameworksService.searchFrameworkByName(name);
+      const resultsSearch: Framework[] = await this.frameworksService.searchFrameworkByName(name);
       console.log("Frameworks found :", resultsSearch.length)
 
       if(resultsSearch.length == 0) {
@@ -122,8 +122,8 @@ class FrameworksController {
   // Update frameworks
   public updateFrameworks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const oldName: string = String(req.body.oldName);
-      const oldInternalType: string = String(req.body.oldInternalType);
+      const oldName = String(req.body.oldName);
+      const oldInternalType = String(req.body.oldInternalType);
       const frameworkData : CreateFrameworkDto = Object.assign({}, req.body.framework);
       
       const results: boolean = await this.frameworksService.updateFramework(oldName, oldInternalType, frameworkData);

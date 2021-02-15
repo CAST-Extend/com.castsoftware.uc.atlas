@@ -64,6 +64,35 @@ class AgentController {
           next(error);
         }
       };
+
+      public getPrefix  = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+        
+          const name = String(req.params.name);
+          const agent = this.getAgentByName(name)
+
+          const prefix  = await this.agentManager.getAgentPrefix(agent);
+          console.log(`Prefix of ${name} is ${prefix}`)
+          res.status(200).json({ data: prefix, message: `${name} prefix` });
+          
+        } catch (error) {
+          next(error);
+        }
+      };
+
+      public force  = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        try {
+        
+          const name = String(req.params.name);
+          const agent = this.getAgentByName(name)
+
+          await this.agentManager.forceRun(agent);
+          res.status(200).json({ data: true, message: `${name} prefix` });
+          
+        } catch (error) {
+          next(error);
+        }
+      };
   }
   
   export default AgentController;

@@ -9,13 +9,13 @@ class ConfigurationService {
 
   public async getPythiaURI(): Promise<string> {
     try {
-      const request: string = "CALL artemis.api.configuration.get.pythia.uri()";
+      const request = "CALL artemis.api.configuration.get.pythia.uri()";
 
       const results: QueryResult = await this.neo4jAl.execute(request);
       if (!results.records || results.records.length == 0)
         throw new Error("Results not correctly formatted");
 
-      const uri: string = String(results.records[0].get(0));
+      const uri = String(results.records[0].get(0));
       return uri;
     } catch (err) {
       logger.error("Failed to retrieve the URI of Pythia ...", err);
@@ -25,13 +25,13 @@ class ConfigurationService {
 
   public async setPythiaURI(url:string): Promise<string> {
     try {
-      const request: string = "CALL artemis.api.configuration.set.pythia.uri($url)";
+      const request = "CALL artemis.api.configuration.set.pythia.uri($url)";
 
       const results: QueryResult = await this.neo4jAl.executeWithParameters(request, {url : url});
       if (!results.records || results.records.length == 0)
         throw new Error("Results not correctly formatted");
 
-      const uri: string = String(results.records[0].get(0));
+      const uri = String(results.records[0].get(0));
       return uri;
     } catch (err) {
       logger.error("Failed to change the URI of Pythia ...", err);
@@ -41,7 +41,7 @@ class ConfigurationService {
 
   public async getPythiaTokenPresence(): Promise<boolean> {
     try {
-      const request: string = "CALL artemis.api.configuration.get.pythia.token()";
+      const request = "CALL artemis.api.configuration.get.pythia.token()";
 
       const results: QueryResult = await this.neo4jAl.execute(request);
       if (!results.records || results.records.length == 0)
@@ -60,7 +60,7 @@ class ConfigurationService {
    */
   public async setPythiaToken(token:string): Promise<boolean> {
     try {
-      const request: string = "CALL artemis.api.configuration.set.pythia.token($token)";
+      const request = "CALL artemis.api.configuration.set.pythia.token($token)";
 
       const results: QueryResult = await this.neo4jAl.executeWithParameters(request, {token : token});
       if (!results.records || results.records.length == 0)
@@ -78,7 +78,7 @@ class ConfigurationService {
    */
   public async getArtemisWorkspace(): Promise<string> {
     try {
-      const request: string = "CALL artemis.get.workspace()";
+      const request = "CALL artemis.get.workspace()";
 
       const results: QueryResult = await this.neo4jAl.execute(request);
       if (!results.records || results.records.length == 0)
@@ -97,7 +97,7 @@ class ConfigurationService {
    */
   public async setArtemisWorkspace(newPath:string): Promise<string> {
     try {
-      const request: string = "CALL artemis.set.workspace($path)";
+      const request = "CALL artemis.set.workspace($path)";
 
       const results: QueryResult = await this.neo4jAl.executeWithParameters(request, { path: newPath });
       if (!results.records || results.records.length == 0)
@@ -115,7 +115,7 @@ class ConfigurationService {
    */
   public async getDemeterWorkspace(): Promise<string> {
     try {
-      const request: string = "CALL demeter.get.workspace()";
+      const request = "CALL demeter.get.workspace()";
 
       const results: QueryResult = await this.neo4jAl.execute(request);
       if (!results.records || results.records.length == 0)
@@ -134,7 +134,7 @@ class ConfigurationService {
    */
   public async setDemeterWorkspace(newPath:string): Promise<string> {
     try {
-      const request: string = "CALL demeter.set.workspace($path)";
+      const request = "CALL demeter.set.workspace($path)";
 
       const results: QueryResult = await this.neo4jAl.executeWithParameters(request, { path: newPath });
       if (!results.records || results.records.length == 0)

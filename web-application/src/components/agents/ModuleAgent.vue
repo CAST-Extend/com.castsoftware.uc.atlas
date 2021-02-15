@@ -1,50 +1,54 @@
 <template>
   <v-card min-height="100%">
     <v-card-title> Module Agent</v-card-title>
-    <v-card-text >
+    <v-card-text>
       <v-container>
-        <v-row>
-          Automatically extract the Nodes where a $tagNameHere is present. <br />
-      For more information please visit the wiki of the extension :<br />
-      <a href="https://github.com/CAST-Extend/com.castsoftware.uc.artemis/wiki"
-        >Demeter Wiki</a
-      >
+        <v-row class="mb-5">
+          <p>
+            Automatically extract the objects in CAST Imaging where a
+            <strong class="mx-2">{{ prefix }}</strong> is present. <br />
+            <br />
+            For more information please visit the wiki of the extension :
+            <a
+              href="https://github.com/CAST-Extend/com.castsoftware.uc.artemis/wiki"
+              >Demeter Wiki</a
+            >
+          </p>
         </v-row>
-       <v-row class="mt-2">
-        <v-col cols="12">
-          <v-btn
-            width="96%"
-            class="mx-2"
-            tile
-            color="persianGrey"
-            dark
-            v-on:click="forceAction(application)"
-          >
-            <v-icon left>
-              mdi-adjust
-            </v-icon>
-            Extract architectures
-          </v-btn>
-        </v-col>
-        <v-col cols="12">
-          <v-btn
-            width="96%"
-            tile
-            :loading="loadingToggle"
-            class="ml-2 mr-8 white--text"
-            :color="daemonLevelState ? '#2a9d8f' : '#f4a261'"
-            v-on:click="toggleDaemon()"
-          >
-            <v-icon left>
-              mdi-image-auto-adjust
-            </v-icon>
-            Assistant {{ daemonLevelState ? "active" : "stopped" }}
-          </v-btn>
-        </v-col>
-      </v-row>
+        <v-row class="mt-2">
+          <v-col cols="12">
+            <v-btn
+              width="96%"
+              class="mx-2"
+              tile
+              color="persianGrey"
+              dark
+              v-on:click="forceAction()"
+            >
+              <v-icon left>
+                mdi-adjust
+              </v-icon>
+              Extract modules
+            </v-btn>
+          </v-col>
+          <v-col cols="12">
+            <v-btn
+              width="96%"
+              tile
+              :loading="loadingToggle"
+              class="ml-2 mr-8 white--text"
+              :color="daemonLevelState ? '#2a9d8f' : '#f4a261'"
+              v-on:click="toggleDaemon()"
+            >
+              <v-icon left>
+                mdi-image-auto-adjust
+              </v-icon>
+              Assistant {{ daemonLevelState ? "active" : "stopped" }}
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-container>
     </v-card-text>
-  
   </v-card>
 </template>
 
@@ -57,12 +61,27 @@ export default Vue.extend({
 
   data: () => ({
     nameAgent: "module",
+    prefix: "<Failed to retrieve the tag>",
     daemonLevelState: false,
 
-    loadingToggle: false
+    loadingToggle: false,
+    loadingAction: false
   }),
 
   methods: {
+    getPrefix() {
+      AgentController.getPrefix(this.nameAgent)
+        .then((res: string) => {
+          this.prefix = res;
+        })
+        .catch(err => {
+          console.error(
+            "Failed to retrieve the prefix of the Framework agent",
+            err
+          );
+        });
+    },
+
     getStatus() {
       AgentController.getStatus(this.nameAgent)
         .then((res: boolean) => {
@@ -86,7 +105,7 @@ export default Vue.extend({
           })
           .catch(err => {
             console.error("Failed to stop the Module agent", err);
-            this.daemonLevelState= true;
+            this.daemonLevelState = true;
           })
           .finally(() => {
             this.loadingToggle = false;
@@ -107,12 +126,20 @@ export default Vue.extend({
     },
 
     forceAction() {
-      console.log("Extract");
+      this.loadingAction = true;
+      AgentController.forceAgent(this.nameAgent)
+        .catch(err => {
+          console.error("Failed to force the action of the agent.", err);
+        })
+        .finally(() => {
+          this.loadingAction = false;
+        });
     }
   },
 
   mounted() {
     this.getStatus();
+    this.getPrefix();
   }
 });
 </script>

@@ -24,13 +24,13 @@ class CategoryService {
    * Get the list of supported languages
    */
   public async getAllNodes(): Promise<Category[]> {
-    const req: string = `CALL artemis.api.category.get.all.nodes()`;
+    const req = `CALL artemis.api.category.get.all.nodes()`;
 
     try {
       const val = await this.neo4jAl.execute(req);
       if (!val.records || val.records.length == 0) return [];
 
-      let nodes: Category[] = [];
+      const nodes: Category[] = [];
       for (let index = 0; index < val.records.length; index++) {
         const element = convertRecordToCategoryNode(val.records[index]);
         nodes.push(element);
@@ -51,7 +51,7 @@ class CategoryService {
    * @param node Node to add
    */
   public async addNode(node: CreateCategoryDto): Promise<Category> {
-    const req: string = `CALL artemis.api.category.create.node($name, $iconUrl)`;
+    const req = `CALL artemis.api.category.create.node($name, $iconUrl)`;
 
     try {
       const val = await this.neo4jAl.executeWithParameters(req, node);
@@ -72,7 +72,7 @@ class CategoryService {
    * @param node Updated node
    */
   public async updateNode(node: CreateCategoryDto): Promise<Category> {
-    const req: string = `CALL artemis.api.category.update.node($id, $name, $iconUrl)`;
+    const req = `CALL artemis.api.category.update.node($id, $name, $iconUrl)`;
 
     try {
       const val = await this.neo4jAl.executeWithParameters(req, node);
@@ -89,7 +89,7 @@ class CategoryService {
   }
 
   public async removeNode(idNode: number): Promise<boolean> {
-    const req: string = `CALL artemis.api.category.remove.node($idNode)`;
+    const req = `CALL artemis.api.category.remove.node($idNode)`;
     try {
       const val = await this.neo4jAl.executeWithParameters(req, {
         idNode: idNode,

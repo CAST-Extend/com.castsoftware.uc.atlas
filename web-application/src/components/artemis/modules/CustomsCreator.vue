@@ -482,7 +482,7 @@ export default Vue.extend({
       internalTypes: [],
       framework: "",
       category: "",
-      parentId: -1,
+      parentId: -1
     } as ApiRegexNode,
 
     currentRegexInput: "",
@@ -512,8 +512,8 @@ export default Vue.extend({
     artifactTree: [],
     applicationItems: [] as string[],
     languageItems: [] as string[],
-    defaultApplication: "", 
-    defaultLanguage: "" ,
+    defaultApplication: "",
+    defaultLanguage: "",
 
     parentIdList: [],
 
@@ -523,7 +523,7 @@ export default Vue.extend({
     dialogDeleteNode: false,
     dialogDeleteNodeNumAffected: "",
     toDelete: {} as ApiRegexNode,
-    deletingNode: false,
+    deletingNode: false
   }),
 
   methods: {
@@ -562,7 +562,7 @@ export default Vue.extend({
           this.displayInfoSnackbar("Successfully added the rule.");
           this.refresh();
         })
-        .catch((err) => {
+        .catch(err => {
           console.error("Failed to add the rule", err);
           this.displayInfoSnackbar(`Failed to add the rule. Error: ${err}`);
         });
@@ -584,7 +584,7 @@ export default Vue.extend({
           this.displayInfoSnackbar("Successfully updated the rule.");
           this.refresh();
         })
-        .catch((err) => {
+        .catch(err => {
           console.error("Failed to update the rule");
           this.displayInfoSnackbar(`Failed to update the rule. Error: ${err}`);
         });
@@ -614,7 +614,7 @@ export default Vue.extend({
             this.displayInfoSnackbar("Failed to update the rule. Bad Request.");
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.error("Failed to delete the node.", item);
           this.displayInfoSnackbar(`Failed to delete the rule. Error: ${err}`);
         })
@@ -635,7 +635,7 @@ export default Vue.extend({
         .then((res: number) => {
           this.dialogDeleteNodeNumAffected = res;
         })
-        .catch((err) => {
+        .catch(err => {
           this.dialogDeleteNodeNumAffected = err;
         });
     },
@@ -646,7 +646,7 @@ export default Vue.extend({
           this.testRegexResults = `${res} objects matched this rule`;
           this.snackbarTestResults = true;
         })
-        .catch((err) => {
+        .catch(err => {
           this.testRegexResults = err;
         });
     },
@@ -664,7 +664,7 @@ export default Vue.extend({
         .then((res: string[]) => {
           this.internalTypes = res;
         })
-        .catch((err) => {
+        .catch(err => {
           console.error("Failed to retrieve the list of internal types", err);
         });
     },
@@ -674,7 +674,7 @@ export default Vue.extend({
         .then((res: Category[]) => {
           this.categories = res;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log("Failed to retrieve the list of categories");
         });
     },
@@ -688,17 +688,21 @@ export default Vue.extend({
             this.items = res;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
     },
 
     createQuerySet() {
-      ArtifactController.buildQuerySet(this.artifactTree, this.defaultApplication, this.defaultLanguage)
+      ArtifactController.buildQuerySet(
+        this.artifactTree,
+        this.defaultApplication,
+        this.defaultLanguage
+      )
         .then((res: string) => {
           this.fullQuerySet = res;
         })
-        .catch((err) => {
+        .catch(err => {
           this.fullQuerySet = err;
         });
     },
@@ -715,7 +719,7 @@ export default Vue.extend({
           }
           this.parentIdList.push({ id: -1, name: "No parent" });
         })
-        .catch((err) => {
+        .catch(err => {
           console.error(err);
         });
     },
@@ -727,7 +731,7 @@ export default Vue.extend({
           this.applicationItems = res;
           this.defaultApplication = res[0];
         })
-        .catch((err) => {
+        .catch(err => {
           console.error("Failed to get the list of the application");
         });
 
@@ -736,7 +740,7 @@ export default Vue.extend({
           this.languageItems = res;
           this.defaultLanguage = res[0];
         })
-        .catch((err) => {
+        .catch(err => {
           console.error("Failed to retrieve languages.", err);
         });
     },
@@ -744,17 +748,21 @@ export default Vue.extend({
     getArtifactTree() {
       console.log("Get Artifact Tree data");
       // Get the tree
-      ArtifactController.getArtifactAsTree(this.defaultApplication, this.defaultLanguage)
+      ArtifactController.getArtifactAsTree(
+        this.defaultApplication,
+        this.defaultLanguage
+      )
         .then((res: Artifact[]) => {
           console.log("Get Artifact Tree", res);
           this.artifactItems = res;
         })
-        .catch((err) => {
-          console.error(`Error trying to retrieve the breakdown of ${this.defaultApplication}`, err);
+        .catch(err => {
+          console.error(
+            `Error trying to retrieve the breakdown of ${this.defaultApplication}`,
+            err
+          );
         });
       // Get the list of application
-
-      
     },
 
     // Build the list this.treeExport
@@ -793,12 +801,12 @@ export default Vue.extend({
       this.getAllNodesAsTree();
       this.initFocusView();
       this.getApplicationAndLanguages();
-    },
+    }
   },
 
   mounted() {
     this.refresh();
     this.getArtifactTree();
-  },
+  }
 });
 </script>

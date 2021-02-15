@@ -16,7 +16,7 @@ class GroupingService {
         const req = "CALL demeter.api.get.candidate.modules($appName)";
         const params = { appName: application };
 
-        let groups:CandidateResults[] = [];
+        const groups:CandidateResults[] = [];
 
         const res = await this.neo4jAl.executeWithParameters(req, params);
 
@@ -43,7 +43,7 @@ class GroupingService {
         const req = 'CALL demeter.api.get.demeter.modules($appName)';
         const params = { appName: application };
 
-        let groups:DemeterGroup[] = [];
+        const groups:DemeterGroup[] = [];
 
         const res = await this.neo4jAl.executeWithParameters(req, params);
 

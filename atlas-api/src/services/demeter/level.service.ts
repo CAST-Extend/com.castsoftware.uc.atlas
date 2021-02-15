@@ -15,7 +15,7 @@ export default class LevelService {
       const req = "CALL demeter.api.get.candidate.levels($appName)";
       const params = { appName: application };
 
-      let groups:CandidateResults[] = [];
+      const groups:CandidateResults[] = [];
 
       const res = await this.neo4jAl.executeWithParameters(req, params);
 
@@ -40,7 +40,7 @@ export default class LevelService {
       const req = 'CALL demeter.api.get.demeter.levels($appName)';
       const params = { appName: application };
 
-      let groups:Level5Group[] = [];
+      const groups:Level5Group[] = [];
 
       const res = await this.neo4jAl.executeWithParameters(req, params);
 

@@ -11,4 +11,3 @@ export interface Level5Group {
   numObjects: number;
   demeterGroup: boolean;
 }
- 

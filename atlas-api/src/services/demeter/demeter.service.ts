@@ -9,7 +9,7 @@ class DemeterService {
      * Get the version of Artemis
      */
     public async getVersion(): Promise<string> {
-        const req: string = `CALL demeter.version()`;
+        const req = `CALL demeter.version()`;
     
         try {
           const val = await this.neo4jAl.execute(req);

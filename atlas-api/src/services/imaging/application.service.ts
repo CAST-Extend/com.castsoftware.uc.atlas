@@ -11,7 +11,7 @@ class ApplicationService {
      */
     public async getApplications(): Promise<string[]> {    
         try {
-            const request: string = "MATCH (n:Application) RETURN n.Name as name";
+            const request = "MATCH (n:Application) RETURN n.Name as name";
 
             const results: QueryResult = await this.neo4jAl.execute(request);
         

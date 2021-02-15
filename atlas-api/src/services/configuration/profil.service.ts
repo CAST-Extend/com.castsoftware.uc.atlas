@@ -31,7 +31,7 @@ class Profil {
 
 class ProfilService {
     private static neo4jAl: Neo4JAccessLayer = Neo4JAccessLayer.getInstance();
-    private static PROFILE_DIRECTORY:string = String(config.get("workspace.profiles"));
+    private static PROFILE_DIRECTORY = String(config.get("workspace.profiles"));
 
 
     /**

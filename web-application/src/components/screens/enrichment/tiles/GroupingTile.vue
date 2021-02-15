@@ -8,8 +8,14 @@
               Agents
             </h3>
             <p class="ml-4 text-body-1">
-              Industrialize the grouping of tags. When actives, the agents will
-              automatically merge the objects in CAST Imaging.
+              Industrialize the grouping operations in Imaging. With the demeter
+              extension you'll be able to modify the differents views in CAST
+              Imaging to have a better control over your applications.<br /><br />
+              You can choose to automatize these grouping actions with the
+              assistants. If they are activated, they will wait for their
+              specifc tags ( indicated in the boxes below ) to performs the
+              corresponding actions.<br />
+              For more information, please refer to the documentation.
             </p>
           </v-row>
         </v-card-title>
@@ -66,7 +72,7 @@ export default Vue.component("GroupingTile", {
   computed: {
     getApplicationName() {
       return this.$store.state.applicationName;
-    },
+    }
   },
 
   mounted() {
@@ -86,7 +92,7 @@ export default Vue.component("GroupingTile", {
     loading: false,
 
     daemonLevelState: true,
-    daemonModuleState: true,
+    daemonModuleState: true
   }),
 
   methods: {
@@ -122,18 +128,18 @@ export default Vue.component("GroupingTile", {
       if (groups == null) return "";
 
       const uniqueNames = [] as string[];
-      groups.forEach((x) => {
+      groups.forEach(x => {
         const groupName: string = x.substring(6);
         if (uniqueNames.indexOf(groupName) == -1) uniqueNames.push(groupName);
       });
       return uniqueNames;
-    },
+    }
   },
 
   watch: {
     getApplicationName(newApp) {
       this.application = newApp;
-    },
-  },
+    }
+  }
 });
 </script>

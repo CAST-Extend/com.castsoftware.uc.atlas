@@ -30,9 +30,8 @@ export class CategoryController {
     }
   }
 
-
   /**
-   * 
+   *
    * @param item Node to update
    */
   public static async updateNode(item: Category): Promise<Category> {
@@ -63,7 +62,8 @@ export class CategoryController {
    * @param item Item to delete
    */
   public static async deleteNode(item: Category): Promise<boolean> {
-    const url = CategoryController.API_BASE_URL + `/api/artemis/category/${item.id}`;
+    const url =
+      CategoryController.API_BASE_URL + `/api/artemis/category/${item.id}`;
 
     try {
       const res = await axios.delete(url);
@@ -88,9 +88,8 @@ export class CategoryController {
   /**
    * Get the category node
    */
-  public static async getAllNode() : Promise<Category[]> {
-    const url =
-    CategoryController.API_BASE_URL + "/api/artemis/category/all";
+  public static async getAllNode(): Promise<Category[]> {
+    const url = CategoryController.API_BASE_URL + "/api/artemis/category/all";
 
     try {
       const res = await axios.get(url);
@@ -98,12 +97,14 @@ export class CategoryController {
       let results: Category[] = [];
       if (res.status == 200) {
         const apiResponse: ApiResponse = res.data;
-        if(Array.isArray(apiResponse.data)) {
-            results = apiResponse.data;
+        if (Array.isArray(apiResponse.data)) {
+          results = apiResponse.data;
         }
         return results;
       } else {
-        throw new Error(`Failed to retrieve the list of Category Nodes. Status (${res.status}) : Error : ${res.data}`);
+        throw new Error(
+          `Failed to retrieve the list of Category Nodes. Status (${res.status}) : Error : ${res.data}`
+        );
       }
     } catch (error) {
       console.error(
@@ -113,6 +114,4 @@ export class CategoryController {
       throw error;
     }
   }
-
-
 }

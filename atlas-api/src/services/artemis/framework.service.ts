@@ -46,13 +46,13 @@ class FrameworksService {
       let val: QueryResult;
 
       if (internalType) {
-        const req: string = `CALL artemis.api.find.framework($name, $internalType)`;
+        const req = `CALL artemis.api.find.framework($name, $internalType)`;
         val = await this.neo4jAl.executeWithParameters(req, {
           name: name,
           internalType: internalType,
         });
       } else {
-        const req: string = `CALL artemis.api.find.framework($name)`;
+        const req = `CALL artemis.api.find.framework($name)`;
         val = await this.neo4jAl.executeWithParameters(req, { name: name });
       }
 
@@ -74,12 +74,12 @@ class FrameworksService {
    * @param name Name to search
    */
   public async searchFrameworkByName(name: string): Promise<Framework[]> {
-    let res: QueryResult = await this.neo4jAl.executeWithParameters(
+    const res: QueryResult = await this.neo4jAl.executeWithParameters(
       "CALL artemis.api.find.framework.name.contains($name, 10);",
       { name: name }
     );
 
-    let returnList: Framework[] = [];
+    const returnList: Framework[] = [];
     let singleRecord;
     for (let index = 0; index < res.records.length; index++) {
       singleRecord = res.records[index];
@@ -97,7 +97,7 @@ class FrameworksService {
     name: string,
     internalType: string
   ): Promise<Framework> {
-    const req: string = `CALL artemis.api.find.framework($name, $internalType)`;
+    const req = `CALL artemis.api.find.framework($name, $internalType)`;
 
     try {
       const val = await this.neo4jAl.executeWithParameters(req, {
@@ -133,7 +133,7 @@ class FrameworksService {
     );
 
     // Assign number of detection
-    let params: any = Object.assign({}, frameworkData);
+    const params: any = Object.assign({}, frameworkData);
     params.numberOfDetection = 0;
     params.oldName = oldName;
     params.oldInternalType = oldInternalType;
@@ -143,7 +143,7 @@ class FrameworksService {
         404,
         `Framework with name ${frameworkData.name} does not exist.`
       );
-    const req: string = `CALL artemis.api.update.framework($oldName, $oldInternalType, $name, $discoveryDate, $location, $description, $type, $category, $internalType, $numberOfDetection, $percentageOfDetection);`;
+    const req = `CALL artemis.api.update.framework($oldName, $oldInternalType, $name, $discoveryDate, $location, $description, $type, $category, $internalType, $numberOfDetection, $percentageOfDetection);`;
 
     console.log("Framework data to add : ", params);
     try {
@@ -204,7 +204,7 @@ class FrameworksService {
     } else {
       // Add a new framework
       // API : artemis.api.add.framework(String Name, String DiscoveryDate, String Location, String Description, String Type, String Category, String InternalType)
-      const req: string = `CALL artemis.api.add.framework($name, $discoveryDate, $location, $description, $type, $category, $internalType);`;
+      const req = `CALL artemis.api.add.framework($name, $discoveryDate, $location, $description, $type, $category, $internalType);`;
       const results = await this.neo4jAl.executeWithParameters(
         req,
         frameworkData
@@ -220,7 +220,7 @@ class FrameworksService {
    * Get the total number of framework in the database
    */
   public async getNumberFrameworks(): Promise<number> {
-    const req: string = `CALL artemis.api.get.framework.number()`;
+    const req = `CALL artemis.api.get.framework.number()`;
     const results = await this.neo4jAl.execute(req);
 
     if (!results.records || results.records.length == 0) return 0;
@@ -235,7 +235,7 @@ class FrameworksService {
   public async getNumberFrameworksWithInternalType(
     internalType: string
   ): Promise<number> {
-    const req: string = `CALL artemis.api.get.framework.number($internalType)`;
+    const req = `CALL artemis.api.get.framework.number($internalType)`;
     const results = await this.neo4jAl.executeWithParameters(req, {
       internalType: internalType,
     });
@@ -269,7 +269,7 @@ class FrameworksService {
       );
     }
 
-    let returnList: Framework[] = [];
+    const returnList: Framework[] = [];
     let singleRecord;
     for (let index = 0; index < res.records.length; index++) {
       singleRecord = res.records[index];
@@ -283,12 +283,12 @@ class FrameworksService {
    * Get the list of Framework necessitating a validation
    */
   public async getToValidateFrameworks(): Promise<Framework[]> {
-    let res: QueryResult = await this.neo4jAl.execute(
+    const res: QueryResult = await this.neo4jAl.execute(
         "CALL artemis.api.get.framework.to.validate();"
       );
     
 
-    let returnList: Framework[] = [];
+    const returnList: Framework[] = [];
     let singleRecord;
     for (let index = 0; index < res.records.length; index++) {
       singleRecord = res.records[index];
@@ -303,11 +303,11 @@ class FrameworksService {
    * Get the list of internal type
    */
   public async getFrameworksInternalTypes(): Promise<string[]> {
-    let res: QueryResult = await this.neo4jAl.execute(
+    const res: QueryResult = await this.neo4jAl.execute(
       "CALL artemis.api.get.framework.internalType()"
     );
 
-    let returnList: string[] = [];
+    const returnList: string[] = [];
     let singleRecord;
     for (let index = 0; index < res.records.length; index++) {
       singleRecord = String(res.records[index].get(0));

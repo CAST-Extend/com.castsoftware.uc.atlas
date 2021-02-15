@@ -1,4 +1,6 @@
+import TagController from "@controller/configurations/tag.controller";
 import { Neo4JAccessLayer } from "@database/neo4jAccessLayer";
+import TagService from "@services/configuration/tag.services";
 import { sleep } from "@shared/functions";
 import { logger } from "@shared/logger";
 
@@ -7,9 +9,12 @@ export default abstract class AAgent {
     private stopFlag = false;
     private numRetry = 0;
     protected neo4jAl: Neo4JAccessLayer = Neo4JAccessLayer.getInstance();
+    protected tagService = new TagService();
   
-    abstract group() : Promise<void> ;
+    public abstract group() : Promise<void> ;
     abstract getAgentName() : string ;
+    abstract getPrefix() : Promise<string> ;
+
     abstract getDelay() : number;
   
     private async run() {

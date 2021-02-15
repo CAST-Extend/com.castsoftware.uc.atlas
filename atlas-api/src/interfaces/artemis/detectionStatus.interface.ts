@@ -11,7 +11,7 @@ export enum DetectionStatus {
 export class Detection {
   public application:string;
   public timestampStart:number;
-  public timestampFinish:number = 0;
+  public timestampFinish = 0;
   public language:string;
   public status: DetectionStatus;
   public data: Framework[] = [];

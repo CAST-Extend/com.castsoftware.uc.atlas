@@ -177,7 +177,7 @@ export class LevelController {
     try {
       const res = await axios.post(url, {
         level: groupName,
-        newLevel: newName,
+        newLevel: newName
       });
       if (validStatus(res.status)) {
         const apiResponse: ApiResponse = res.data;

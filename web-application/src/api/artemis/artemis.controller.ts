@@ -47,39 +47,6 @@ export class ArtemisController {
   }
 
   /**
-   * Set the workspace of artemis
-   */
-  public static async setWorkspace(workspacePath: string): Promise<string> {
-    try {
-      const request = `CALL artemis.set.workspace(${workspacePath});`;
-
-      const results: QueryResult = await this.neo4jal.execute(request);
-      const newPath: string = results.records[0].get(0);
-
-      console.log(`Artemis workspace was successfully changed to ${newPath}.`);
-
-      return (
-        "The path of artemis was successfully changed to : " + workspacePath
-      );
-    } catch (error) {
-      console.error("Something went wrong during the workspace change.", error);
-      throw error;
-    }
-  }
-
-  /**
-   * Get the workspace of artemis
-   */
-  public static async getWorkspace(): Promise<string> {
-    const request = `CALL artemis.get.workspace();`;
-
-    const results: QueryResult = await this.neo4jal.execute(request);
-    const newPath: string = results.records[0].get(0);
-
-    return newPath;
-  }
-
-  /**
    * Set the Online mode of artemis
    */
   public static async setOnlineMode(value: boolean): Promise<boolean> {
