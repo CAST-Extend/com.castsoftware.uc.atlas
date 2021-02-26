@@ -3,6 +3,7 @@ import { ApiResponse } from "../interface/ApiResponse.interface";
 import { DetectionResultDTO } from "../dto/ApiArtemis.dto";
 import { DetectionResult } from "../interface/ApiArtemis.interface";
 import { ApiComUtils } from "../ApiComUtils";
+import { DetectionCandidate } from "../interface/artemis/ApiDetectionCandidate.interface";
 
 export default class DetectionController {
   private static API_BASE_URL = ApiComUtils.getUrl();
@@ -204,6 +205,153 @@ export default class DetectionController {
       throw error;
     }
   }
-}
 
-// Launch routines
+  // Get the list of pending detection
+  public static async getDetectionQueue(): Promise<DetectionCandidate[]> {
+    const url =
+      DetectionController.API_BASE_URL + "/api/artemis/detection/queue/get";
+
+    try {
+      const res = await axios.get(url);
+      let detectionList: DetectionCandidate[] = [];
+
+      if (res.status == 200) {
+        const apiResponse: ApiResponse = res.data;
+        if (Array.isArray(apiResponse.data)) {
+          detectionList = apiResponse.data;
+        }
+      } else {
+        console.warn(
+          `Failed to retrieve the queue of detection. Status (${res.status})`
+        );
+      }
+
+      return detectionList;
+    } catch (error) {
+      console.error(
+        `Failed to reach the API : ${url}. Failed to retrieve the queue of detection..`,
+        error
+      );
+      throw error;
+    }
+  }
+
+  /**
+   * Get the on-going detection 
+   */
+  public static async getCurrent(): Promise<DetectionCandidate> {
+    const url =
+      DetectionController.API_BASE_URL + "/api/artemis/detection/queue/current";
+
+    try {
+      const res = await axios.get(url);
+
+      if (res.status == 200) {
+        const apiResponse: ApiResponse = res.data;
+        if(res.data == null) return null;
+        return apiResponse.data as DetectionCandidate;
+      } else {
+        console.warn(
+          `Failed to retrieve the current detection. Status (${res.status})`
+        );
+      }
+
+      return null;
+    } catch (error) {
+      console.error(
+        `Failed to reach the API : ${url}. Failed to retrieve the current detection.`,
+        error
+      );
+      throw error;
+    }
+  }
+
+  // Get the list of pending detection
+  public static async flushDetectionQueue(): Promise<boolean> {
+    const url =
+      DetectionController.API_BASE_URL + "/api/artemis/detection/queue/flush";
+
+    try {
+      const res = await axios.get(url);
+
+      if (res.status == 200) {
+        const apiResponse: ApiResponse = res.data;
+        return Boolean(apiResponse.data);
+      } else {
+        console.warn(
+          `Failed to retrieve the queue of detection. Status (${res.status})`
+        );
+        return false;
+      }
+    } catch (error) {
+      console.error(
+        `Failed to reach the API : ${url}. Failed to retrieve the queue of detection..`,
+        error
+      );
+      throw error;
+    }
+  }
+
+  /**
+   * Add some candidates to the detection queue
+   * @param candidates List of candidate to add
+   */
+  public static async addCandidatesToDetection(
+    candidates: DetectionCandidate[]
+  ): Promise<number> {
+    const url =
+      DetectionController.API_BASE_URL + "/api/artemis/detection/queue/add";
+
+    try {
+      const params = { candidates: candidates };
+      const res = await axios.post(url, params);
+
+      if (res.status == 200) {
+        const apiResponse: ApiResponse = res.data;
+        return Number(apiResponse.data);
+      } else {
+        console.warn(
+          `Failed to add the list of candidates to the detection queue. Status (${res.status})`
+        );
+      }
+      return 0;
+    } catch (error) {
+      console.error(
+        `Failed to reach the API : ${url}. Failed to add the list of candidates to the detection queue.`,
+        error
+      );
+      throw error;
+    }
+  }
+
+  public static async getDetectionCandidates(): Promise<DetectionCandidate[]> {
+    const url =
+      DetectionController.API_BASE_URL +
+      "/api/assistants/frameworks/candidates";
+
+    try {
+      const res = await axios.get(url);
+
+      let detectionList: DetectionCandidate[] = [];
+
+      if (res.status == 200) {
+        const apiResponse: ApiResponse = res.data;
+        if (Array.isArray(apiResponse.data)) {
+          detectionList = apiResponse.data;
+        }
+      } else {
+        console.warn(
+          `Failed to get the list of candidates. Status (${res.status})`
+        );
+      }
+
+      return detectionList;
+    } catch (error) {
+      console.error(
+        `Failed to reach the API : ${url}. Failed to get the list of candidates .`,
+        error
+      );
+      throw error;
+    }
+  }
+}

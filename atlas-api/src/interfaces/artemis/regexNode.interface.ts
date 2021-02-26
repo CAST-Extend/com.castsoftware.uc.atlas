@@ -2,7 +2,7 @@ export interface RegexNode {
     id: number;
     name : string;
     regexes: string[];
-    internalTypes: string[];
+    internalType: string[];
     framework: string;
     category: string;
     parentId: number;

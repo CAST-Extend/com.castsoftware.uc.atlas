@@ -173,6 +173,56 @@ export class FrameworkController {
     }
   }
 
+  // Get the list of Framework to validate
+  public static async getDuplicatesFrameworks(): Promise<Framework[]> {
+    const url =
+      FrameworkController.API_BASE_URL + "/api/artemis/frameworks/duplicates";
+    try {
+      const res = await axios.get(url);
+
+      if (res.status == 200 || res.status == 304) {
+        const apiResponse: ApiResponse = res.data;
+        if (Array.isArray(apiResponse.data)) {
+          return apiResponse.data;
+        }
+      } else {
+        throw new Error(
+          ` Bad status. Status (${res.status}). Query-Content : ${res.data}`
+        );
+      }
+    } catch (err) {
+      console.error(
+        `Failed to reach the API : ${url}. Failed to retrieve a the list of duplicates frameworks.`,
+        err
+      );
+      throw err;
+    }
+  }
+
+    // Get the list of Framework to validate
+    public static async launchAutoCleaning(): Promise<number> {
+      const url =
+        FrameworkController.API_BASE_URL + "/api/artemis/frameworks/autoClean";
+      try {
+        const res = await axios.get(url);
+  
+        if (res.status == 200 || res.status == 304) {
+          const apiResponse: ApiResponse = res.data;
+          return Number(apiResponse.data);
+        } else {
+          throw new Error(
+            ` Bad status. Status (${res.status}). Query-Content : ${res.data}`
+          );
+        }
+      } catch (err) {
+        console.error(
+          `Failed to reach the API : ${url}. Failed to retrieve execute the auto cleaning on the server.`,
+          err
+        );
+        throw err;
+      }
+    }
+
   // Get a batch of framework ( filter by internal type possible )
   public static async getFrameworkBatch(
     start: number,
@@ -199,6 +249,7 @@ export class FrameworkController {
         const apiResponse: ApiResponse = res.data;
         if (Array.isArray(apiResponse.data)) {
           detectionList = apiResponse.data;
+          console.log(detectionList);
         }
       } else {
         console.warn(
@@ -250,6 +301,135 @@ export class FrameworkController {
     } catch (error) {
       console.error(
         `Failed to reach the API : ${url}. Failed to retrieve a batch frameworks by internalType.`,
+        error
+      );
+      throw error;
+    }
+  }
+
+  public static async updateFrameworksById(
+    framework: Framework
+  ): Promise<boolean> {
+    const url =
+      FrameworkController.API_BASE_URL + "/api/artemis/frameworks/updateByID";
+
+    try {
+      const body: any = {};
+      body.framework = framework;
+
+      const res = await axios.post(url, body);
+      let updateResutls = false;
+
+      if (res.status == 200) {
+        const apiResponse: ApiResponse = res.data;
+        updateResutls = Boolean(apiResponse.data);
+      } else {
+        console.warn(
+          `Failed to update a framework by its Id. Status (${res.status})`
+        );
+      }
+
+      return updateResutls;
+    } catch (error) {
+      console.error(
+        `Failed to reach the API : ${url}. Failed to update a framework by its Id.`,
+        error
+      );
+      throw error;
+    }
+  }
+
+  public static async addFramework(framework: Framework): Promise<boolean> {
+    const url =
+      FrameworkController.API_BASE_URL + "/api/artemis/frameworks/add";
+
+    try {
+      const body: any = {};
+      body.framework = framework;
+
+      const res = await axios.post(url, body);
+      let updateResutls = false;
+
+      if (res.status == 200) {
+        const apiResponse: ApiResponse = res.data;
+        updateResutls = Boolean(apiResponse.data);
+      } else {
+        console.warn(
+          `Failed to add a framework by its Id. Status (${res.status})`
+        );
+      }
+
+      return updateResutls;
+    } catch (error) {
+      console.error(
+        `Failed to reach the API : ${url}. Failed to add a framework.`,
+        error
+      );
+      throw error;
+    }
+  }
+
+  /**
+   * Delete the framework by its id
+   * @param id Id of the Framework to delete
+   */
+  public static async deleteFramework(id: number): Promise<boolean> {
+    const url =
+      FrameworkController.API_BASE_URL + "/api/artemis/frameworks/delete";
+
+    try {
+      const body: any = { id: id };
+
+      const res = await axios.post(url, body);
+      let result = false;
+
+      if (res.status == 200) {
+        const apiResponse: ApiResponse = res.data;
+        result = Boolean(apiResponse.data);
+      } else {
+        console.warn(
+          `Failed to delete a framework by its Id. Status (${res.status})`
+        );
+      }
+
+      return result;
+    } catch (error) {
+      console.error(
+        `Failed to reach the API : ${url}. Failed to delete a framework.`,
+        error
+      );
+      throw error;
+    }
+  }
+
+  /**
+   * Toggle the type of the framework by its id
+   * @param id Id of the Framework to toggle
+   */
+  public static async toggleFramework(id: number): Promise<boolean> {
+    const url =
+      FrameworkController.API_BASE_URL +
+      "/api/artemis/frameworks/toggle/validation";
+
+    try {
+      const body: any = { id: id };
+
+      const res = await axios.post(url, body);
+      let result = false;
+
+      if (res.status == 200) {
+        const apiResponse: ApiResponse = res.data;
+        result = Boolean(apiResponse.data);
+      } else {
+        console.warn(
+          `Failed to toggle the type of a framework by its Id. Status (${res.status})`
+        );
+      }
+
+      return result;
+    } catch (error) {
+      console.error(
+        `Failed to toggle the type of the API : ${url}. Failed to toggle a framework.`,
         error
       );
       throw error;

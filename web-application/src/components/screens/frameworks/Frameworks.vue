@@ -39,7 +39,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { AtlasController } from "@/api/atlas/atlas.controller";
-import ArtemisViewer from "@/components/artemis/modules/ArtemisViewer.vue";
+import ArtemisConsole from "@/components/artemis/modules/ArtemisConsole.vue";
 import DetectionExplorer from "@/components/artemis/modules/DetectionExplorer.vue";
 import FrameworkReviewer from "@/components/artemis/modules/FrameworkReviewer.vue";
 import CategoriesCreator from "@/components/artemis/modules/CategoriesCreator.vue";
@@ -49,7 +49,7 @@ export default Vue.extend({
   name: "Frameworks",
 
   components: {
-    ArtemisViewer,
+    ArtemisConsole,
     DetectionExplorer,
     FrameworkReviewer,
     CustomsCreator,
@@ -73,7 +73,7 @@ export default Vue.extend({
     tab: 0,
     items: [
       {
-        view: "ArtemisViewer",
+        view: "ArtemisConsole",
         name: "Discover",
         icon: "mdi-assistant"
       },

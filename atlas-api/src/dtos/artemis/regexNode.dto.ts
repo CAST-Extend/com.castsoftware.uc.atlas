@@ -11,7 +11,7 @@ export class CreateRegexNodeDto {
   public regexes: string[];
   
   @IsArray()
-  public internalTypes: string[];
+  public internalType: string[];
   
   @IsString()
   public framework: string;

@@ -9,8 +9,11 @@ import {
   DetectionStatus,
 } from "@interfaces/artemis/detectionStatus.interface";
 import { Framework } from "@interfaces/artemis/framework.interface";
+import FrameworksService from "./framework.service";
 
 class DetectionService {
+
+  private static INSTANCE: DetectionService;
   private ARTEMIS_LABEL = config.get("artemis.frameworkNode");
   private neo4jAl: Neo4JAccessLayer = Neo4JAccessLayer.getInstance();
 
@@ -20,25 +23,6 @@ class DetectionService {
 
   private failedApplicationDetection: Detection[] = [];
   private finishedApplicationDetection: Detection[] = [];
-
-  /**
-   * Convert a neo4j record to a Framework
-   * @param res Record to convert
-   */
-  private convertRecordToFramework(res: any): Framework {
-    const framework: Framework = {
-      name: res.get("name"),
-      description: res.get("description"),
-      type: res.get("type") == "Framework" ? "Framework" : "Not a framework",
-      category: res.get("category") || "",
-      internalType: res.get("internalType") || "",
-      location: res.get("location") || "",
-      discoveryDate: res.get("discoveryDate"),
-      percentageOfDetection: Number(res.get("percentageOfDetection")) || 0,
-    };
-
-    return framework;
-  }
 
   /**
    *
@@ -51,6 +35,7 @@ class DetectionService {
     if (indexPending != -1)
       return this.pendingApplicationDetection[indexPending];
 
+    // Successful detection
     const indexSuccess = this.finishedApplicationDetection.findIndex(
       (i) => i.application === appName
     );
@@ -107,7 +92,7 @@ class DetectionService {
    * @param appName Name of the application concerned by the detection
    * @param language Language for the detection
    */
-  public launchDetection(appName: string, language: string): boolean {
+  public launchDetection(appName: string, language: string): CancellablePromise<Framework[]> {
     const request = `CALL artemis.launch.detection($applicationName, $language, true);`;
     const params = { applicationName: appName, language: language };
 
@@ -116,7 +101,7 @@ class DetectionService {
       (i) => i.application === appName
     );
     if (indexPending != -1) {
-      return false;
+      return null;
     }
 
     const detection: Detection = new Detection(appName, language);
@@ -128,7 +113,9 @@ class DetectionService {
     const session = this.neo4jAl.getSession();
     const transaction = session.beginTransaction();
 
-    const promise: Promise<Framework[]> = transaction.run(request, params)
+    const promise: Promise<Framework[]> = new Promise ((resolve, reject) => {
+      
+      transaction.run(request, params)
       .then((res: QueryResult) => {
         logger.info(`Results of the detection : ${res.records.length}`);
         logger.info(`1st Results of the detection `, res.records[0]);
@@ -144,21 +131,21 @@ class DetectionService {
         let framework: Framework;
 
         for (let i = 0; i < res.records.length; i++) {
-          framework = this.convertRecordToFramework(res.records[i]);
+          framework = FrameworksService.convertRecordToFramework(res.records[i]);
           resultList.push(framework);
         }
 
         // Add to sucess
         detection.markAsSuccess(resultList);
         this.finishedApplicationDetection.push(detection);
-        return resultList;
+        resolve(resultList);
       })
       .catch((err) => {
         // Add to failed detections
-        console.error("The analysis of the application failed.", err);
+        logger.error("The analysis of the application failed.", err);
         detection.markAsFailed();
         this.failedApplicationDetection.push(detection);
-        return [];
+        resolve([]);
       })
       .finally(() => {
         logger.info(`Detection finished for application ${appName} `);
@@ -169,6 +156,7 @@ class DetectionService {
           this.pendingApplicationDetection.splice(index, 1);
         }
       });
+    });
 
     // Make the promise above cancellable for the user
     const cancellablePromise: CancellablePromise<
@@ -176,7 +164,7 @@ class DetectionService {
     > = new CancellablePromise(appName, language, transaction, promise);
     this.pendingPromiseDetection.push(cancellablePromise);
 
-    return true;
+    return cancellablePromise;
   }
 
   /**
@@ -206,6 +194,18 @@ class DetectionService {
     }
 
     return canceled;
+  }
+
+  private constructor() {
+
+  }
+
+  public static getInstance() : DetectionService{
+    if(DetectionService.INSTANCE == null) {
+      DetectionService.INSTANCE = new DetectionService();
+    }
+
+    return DetectionService.INSTANCE
   }
 }
 

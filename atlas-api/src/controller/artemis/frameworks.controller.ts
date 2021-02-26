@@ -108,11 +108,33 @@ class FrameworksController {
     }
   }
 
+  // Get duplicate
+  public getDuplicateFrameworks= async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const frameworks: Framework[] = await this.frameworksService.getDuplicateFrameworks();
+      res.status(200).send({ data: frameworks, message: 'Duplicates' });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  
+  // Auto clean the detection
+  public autoClean= async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const numGroupClean  = await this.frameworksService.autoClean();
+      res.status(200).send({ data: numGroupClean, message: 'Cleaned groups' });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
   // Get internal types
-  public getFrameworksInternalTypes = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public getFrameworksInternalType= async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
     
-      const types:string[] = await this.frameworksService.getFrameworksInternalTypes();
+      const types:string[] = await this.frameworksService.getFrameworksinternalType();
       res.status(200).send({ data: types, message: 'Internal types' });
     } catch (error) {
       next(error);
@@ -123,7 +145,7 @@ class FrameworksController {
   public updateFrameworks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const oldName = String(req.body.oldName);
-      const oldInternalType = String(req.body.oldInternalType);
+      const oldInternalType = Array(req.body.oldInternalType);
       const frameworkData : CreateFrameworkDto = Object.assign({}, req.body.framework);
       
       const results: boolean = await this.frameworksService.updateFramework(oldName, oldInternalType, frameworkData);
@@ -136,6 +158,54 @@ class FrameworksController {
       next(error);
     }
   }
+  
+    // Update frameworks
+    public updateFrameworksByID = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+      try {
+        const frameworkData : CreateFrameworkDto = Object.assign({}, req.body.framework);
+        
+        const results: boolean = await this.frameworksService.updateFrameworkById(frameworkData);
+        res.status(200).send({ data: results, message: 'Updated by ID' });
+      } catch (error) {
+        next(error);
+      }
+    }
+
+    // Update frameworks
+    public forceAddFramework = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+      try {
+        const frameworkData : CreateFrameworkDto = Object.assign({}, req.body.framework);
+        
+        const results: boolean = await this.frameworksService.forceAddFramework(frameworkData);
+        res.status(200).send({ data: results, message: 'Force add' });
+      } catch (error) {
+        next(error);
+      }
+    }
+
+    // Delete by ID
+    public deleteFrameworkTypeById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+      try {
+        const id = Number(req.body.id);
+        
+        const results: boolean = await this.frameworksService.deleteFrameworkById(id);
+        res.status(200).send({ data: results, message: 'Delete by id' });
+      } catch (error) {
+        next(error);
+      }
+    }
+
+    // Toggle
+    public toggleFrameworkTypeById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+      try {
+        const id = Number(req.body.id);
+        
+        const results: boolean = await this.frameworksService.toggleFrameworkTypeById(id);
+        res.status(200).send({ data: results, message: 'Toggle by ID' });
+      } catch (error) {
+        next(error);
+      }
+    }
 
 }
 

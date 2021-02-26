@@ -32,6 +32,10 @@
         }
     },
 
+    "assistant": {
+        "reload": 10000
+    },
+
     "authentication": {
         "reloadDelay" : 30000
     }

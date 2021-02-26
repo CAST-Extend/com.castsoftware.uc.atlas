@@ -25,7 +25,6 @@ class AgentController {
 
     public getAgentStatus = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-        
           const name = String(req.params.name);
           const agent = this.getAgentByName(name)
 

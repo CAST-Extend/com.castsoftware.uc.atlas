@@ -53,7 +53,7 @@ export default abstract class AAgent {
     }
   
     public getStatus(): boolean {
-      return this.stopFlag;
+      return this.isRunning;
     }
   
     public stop(): boolean {

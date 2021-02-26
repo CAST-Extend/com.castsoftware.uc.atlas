@@ -10,7 +10,7 @@ function convertRecordToRegexNode(record: any): RegexNode {
     id: int(record.get("id")).toNumber(),
     name: record.get("name"),
     regexes: record.get("regexes") || [],
-    internalTypes: record.get("internalTypes") || [],
+    internalType: record.get("internalType") || [],
     framework: record.get("framework") || "",
     category: record.get("category") || "",
     parentId:
@@ -56,7 +56,7 @@ class RegexNodesService {
    * @param node Node to add
    */
   public async addRegexNode(node: CreateRegexNodeDto): Promise<RegexNode> {
-    const req = `CALL artemis.api.regex.create.node($name, $regexes, $internalTypes, $framework, $category, $parentId)`;
+    const req = `CALL artemis.api.regex.create.node($name, $regexes, $internalType, $framework, $category, $parentId)`;
 
     try {
       console.log("Adding item :", node);
@@ -80,7 +80,7 @@ class RegexNodesService {
    */
   public async updateRegexNode(node: CreateRegexNodeDto): Promise<RegexNode> {
     console.log("Updating with parent : ", node);
-    const req = `CALL artemis.api.regex.update.node($id, $name, $regexes, $internalTypes, $framework, $category, $parentId)`;
+    const req = `CALL artemis.api.regex.update.node($id, $name, $regexes, $internalType, $framework, $category, $parentId)`;
 
     try {
       const val = await this.neo4jAl.executeWithParameters(req, node);

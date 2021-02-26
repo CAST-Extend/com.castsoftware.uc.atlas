@@ -14,7 +14,9 @@
     <v-card-text>
       <v-container>
         <!-- Predefined Assistans -->
-        <v-row width="100%"> </v-row>
+        <v-row width="100%" class="mb-5">
+          <FrameworkAssistant></FrameworkAssistant
+        ></v-row>
         <!-- Regex Assistants -->
         <v-row width="100%">
           <RegexAssistants></RegexAssistants>
@@ -27,12 +29,14 @@
 <script lang="ts">
 import Vue from "vue";
 import RegexAssistants from "./RegexAssistants.vue";
+import FrameworkAssistant from "./FrameworkAssistant.vue";
 
 export default Vue.extend({
   name: "AssistantsManager",
 
   components: {
-    RegexAssistants
+    RegexAssistants,
+    FrameworkAssistant
   },
 
   data: () => ({})

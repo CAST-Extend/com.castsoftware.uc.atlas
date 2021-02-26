@@ -27,12 +27,12 @@
         <v-card style="border: 2px solid #e76f51; border-radius: 20px; ">
           <v-card-text>
             <v-row>
-              <v-col cols="8">
+              <v-col cols="8" md="12">
                 Replicate all the level view in the module module view.<br /><em
                   >This operation will erase the current modules view</em
                 >
               </v-col>
-              <v-col cols="4" fill-height>
+              <v-col class="mb-2" md="12" cols="4" fill-height>
                 <v-btn
                   depressed
                   color="orange"
@@ -46,7 +46,7 @@
             </v-row>
             <v-divider></v-divider>
             <v-row>
-              <v-col cols="8">
+              <v-col cols="8" md="12">
                 Undo all the Demeter levels in your application. This operations
                 will erase all the changes made on this application levels with
                 the demeter extension. <br />
@@ -55,7 +55,7 @@
                   applications</em
                 >
               </v-col>
-              <v-col cols="4" fill-height>
+              <v-col class="mb-2" md="12" cols="4" fill-height>
                 <v-btn class="ma-auto mt-2" depressed color="orange" disabled>
                   Undo all levels
                 </v-btn>
@@ -63,13 +63,13 @@
             </v-row>
             <v-divider></v-divider>
             <v-row>
-              <v-col cols="8">
+              <v-col cols="8" md="12">
                 Undo all the Demeter modules in you application. This operations
                 will erase all the changes made on this application's modules
                 with the demeter extension. <br />
                 <em>( Coming soon )</em>
               </v-col>
-              <v-col cols="4" fill-height>
+              <v-col class="mb-2" md="12" cols="4" fill-height>
                 <v-btn class="ma-auto mt-2" depressed color="orange" disabled>
                   Undo all modules
                 </v-btn>

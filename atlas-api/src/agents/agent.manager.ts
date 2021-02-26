@@ -113,3 +113,5 @@ export class AgentManager {
     }
 
 }
+// Start the Agent Manager
+const agentManager = AgentManager.getInstance();

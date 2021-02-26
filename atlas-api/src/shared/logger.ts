@@ -1,37 +1,38 @@
 import fs from 'fs';
-import winston from 'winston';
+import { createLogger } from 'winston';
 import winstonDaily from 'winston-daily-rotate-file';
 
-// logs dir
-const logDir = __dirname + '/../logs';
+const winston = require('winston');
 
-if (!fs.existsSync(logDir)) {
-  fs.mkdirSync(logDir);
+interface IMessage { 
+  timestamp: any; 
+  level: string; 
+  message : string; 
 }
-
-// winston format
+ 
 const { combine, timestamp, printf } = winston.format;
+const logFormat = printf((message: IMessage) => `${message.timestamp} :: ${process.env.NODE_ENV} :: ${message.level}: ${message.message}`);
 
-// Define log format
-const logFormat = printf(({ timestamp, level, message }) => `${timestamp} ${level}: ${message}`);
-
-/*
- * Log Level
- * error: 0, warn: 1, info: 2, http: 3, verbose: 4, debug: 5, silly: 6
- */
 const logger = winston.createLogger({
+  level: 'info',
+
   format: combine(
     timestamp({
       format: 'YYYY-MM-DD HH:mm:ss',
     }),
     logFormat,
   ),
+
+  defaultMeta: { service: 'user-service' },
   transports: [
-    // info log setting
-    new winstonDaily({
+    //
+    // - Write all logs with level `error` and below to `error.log`
+    // - Write all logs with level `info` and below to `combined.log`
+    //
+      new winstonDaily({
       level: 'info',
       datePattern: 'YYYY-MM-DD',
-      dirname: logDir + '/info', // log file /logs/info/*.log in save
+      dirname: 'logs/info', // log file /logs/info/*.log in save
       filename: `%DATE%.log`,
       maxFiles: 30, // 30 Days saved
       json: false,
@@ -41,26 +42,30 @@ const logger = winston.createLogger({
     new winstonDaily({
       level: 'error',
       datePattern: 'YYYY-MM-DD',
-      dirname: logDir + '/error', // log file /logs/error/*.log in save
+      dirname: 'logs/error', // log file /logs/error/*.log in save
       filename: `%DATE%.error.log`,
       maxFiles: 30, // 30 Days saved
       handleExceptions: true,
       json: false,
       zippedArchive: true,
     }),
+
+   
   ],
 });
-
-logger.add(
-  new winston.transports.Console({
-    format: winston.format.combine(winston.format.splat(), winston.format.colorize(), winston.format.simple()),
-  }),
-);
-
-const stream = {
+ 
+ 
+ const stream = {
   write: (message: string) => {
     logger.info(message.substring(0, message.lastIndexOf('\n')));
   },
 };
+
+
+if (process.env.NODE_ENV !== 'production') {
+  logger.add(new winston.transports.Console({
+    format: winston.format.simple(),
+  }));
+}
 
 export { logger, stream };

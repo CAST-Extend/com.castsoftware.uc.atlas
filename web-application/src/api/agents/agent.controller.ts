@@ -19,6 +19,7 @@ export default class AgentController {
 
       if (res.status == 200) {
         const apiResponse: ApiResponse = res.data;
+        console.log(`API response for agent : ${agent} ::`, apiResponse);
         status = Boolean(apiResponse.data);
       } else {
         throw new Error(`Status (${res.status})`);

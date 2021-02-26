@@ -13,6 +13,18 @@ export class DetectionResultDTO implements DetectionResult {
   public data: Framework[] = [];
 
   static fromRecord(obj: Record<string, any>): DetectionResultDTO {
-    return Object.assign(new DetectionResultDTO(), obj);
+    if (obj == null) {
+      return null;
+    }
+
+    const dto = new DetectionResultDTO();
+    dto.application = String(obj["application"]) || "No Application";
+    dto.timestampStart = Number(obj["timestampStart"]) || 0;
+    dto.timestampFinish = Number(obj["timestampFinish"]) || 0;
+    dto.language = String(obj["language"]) || "No language";
+    dto.status = obj["status"];
+    dto.data = obj["data"] || [];
+
+    return dto;
   }
 }

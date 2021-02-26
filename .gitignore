@@ -4,6 +4,12 @@ atlas-api/dist/*
 web-application/dist/*
 dist/*
 
+#logs
+*-audit.json
+.gz
+
+# Compiled js
+
 
 # local env files
 .env.local
@@ -24,3 +30,5 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+atlas-api/src/logs/info/.1972c8680f5bc612a2d88078b99c2d3b6528c157-audit.json
+*.gz

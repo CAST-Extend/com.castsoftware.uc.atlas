@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { LaunchDetectionDto } from '@dtos/artemis/detection.dto';
-import { Detection, DetectionStatus } from '@interfaces/artemis/detectionStatus.interface';
+import { CancellablePromise, Detection, DetectionStatus } from '@interfaces/artemis/detectionStatus.interface';
 import DetectionService from '@services/artemis/detection.service';
+import { Framework } from '@interfaces/artemis/framework.interface';
 
 class DetectionController {
-  public detectionService:DetectionService = new DetectionService();
+  public detectionService:DetectionService = DetectionService.getInstance();
 
   public getStatusDetection = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -59,9 +60,9 @@ class DetectionController {
   public launchDetection = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const detectionParams:LaunchDetectionDto = req.body;
-      const val:boolean = this.detectionService.launchDetection(detectionParams.application, detectionParams.language);
-      
-      res.status(200).send({ data: val, message: "detection" });
+      const val:CancellablePromise<Framework[]> = this.detectionService.launchDetection(detectionParams.application, detectionParams.language);
+      const b:boolean = (val != null);
+      res.status(200).send({ data: b, message: "detection" });
       
     } catch (error) {
       next(error);

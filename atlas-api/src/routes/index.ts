@@ -8,12 +8,13 @@ import AtlasRouter from "./atlas/atlasIndex.route";
 import ConfigurationRouter from "./configuration/configurationIndex.route";
 import Pythiarouter from "./pythia/pythiaIndex.route";
 import UtilsRoute from './utils/utilsIndex.route';
+import AssistantsRoute from './assistants/assistants.route';
 
 // Init router and path
 const router = Router();
 
 // Add sub-routes
-router.use('/users', UserRouter);
+//router.use('/users', UserRouter);
 
 router.use('/demeter', DemeterRouter);
 router.use('/artemis', ArtemisRouter);
@@ -22,6 +23,7 @@ router.use('/atlas', AtlasRouter);
 router.use('/configuration', ConfigurationRouter);
 router.use('/pythia', Pythiarouter);
 router.use('/utils', UtilsRoute);
+router.use('/assistants', AssistantsRoute);
 
 
 // Export the base-router

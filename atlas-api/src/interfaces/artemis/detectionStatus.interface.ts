@@ -1,3 +1,4 @@
+import { logger } from "@shared/logger";
 import { Transaction } from "neo4j-driver";
 import { Framework } from "./framework.interface";
 
@@ -46,20 +47,28 @@ export class CancellablePromise<T> {
   public application: string; 
   public language: string;
   public transaction: Transaction;
+  public isFinished: boolean;
+
+  public isDone() :boolean {
+    return this.isFinished;
+  }
 
   constructor(application:string, language:string, transaction: Transaction, wrappedPromise:Promise<T>) {
     this.transaction = transaction;
     this.application = application;
     this.language = language;
+    this.isFinished = false;
     this.promise = new Promise((resolve, reject) => {
-        this.cancel = resolve;
+        this.cancel = reject;
         wrappedPromise.then((res:T) => {
           this.transaction.commit();
           resolve(res);
         }).catch((err) => {
           this.transaction.rollback();
-          reject(err);
+          logger.info(`The promise for application ${this.application} was cancelled.`);
+        }).finally(() => {
+          this.isFinished = true;
         })
-    });
+    })
   }
 }
