@@ -65,6 +65,16 @@ None
 - More agents
 
 ## Release Notes
+### Version 2.1.0
+#### What's new ?
+- Automatically choose where to regroup the different Artemis findings with the Assistants 
+- Better review of the configuration detected by Artemis
+- New screen to launch bulk detection on applications and other Artemis dedicated screens 
+- More documentation (coming soon)
+
+#### Bug fixed
+- Bug in Demeter & Artemis configuration causing user-selected parameters to be ignored 
+- 
 ### Version 2.0.0
 - Better Artemis support ( More screens, and configuration)
 - Bug fixing
