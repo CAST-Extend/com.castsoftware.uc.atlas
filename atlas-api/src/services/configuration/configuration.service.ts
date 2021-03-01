@@ -147,6 +147,53 @@ class ConfigurationService {
     }
   }
   
+  /**
+   * Turn on or off all the parameters related to online communication
+   * @param value Value of the internal mode
+   */
+  public async setInternalMode(value: boolean) : Promise<boolean> {
+    try {
+      const requestOnline = "CALL artemis.set.onlineMode($value)";
+      const requestPythia = "CALL artemis.set.pythiaMode($value)";
+
+      await this.neo4jAl.executeWithParameters(requestOnline, { value: value });
+      await this.neo4jAl.executeWithParameters(requestPythia, { value: value });
+     
+
+      return this.getInternalMode();
+    } catch (err) {
+      logger.error("Failed to set internal mode ...", err);
+      throw new HttpException(500, "Internal error");
+    }
+  }
+
+  /**
+   * Get the value of the current internal mode
+   */  
+  public async getInternalMode() : Promise<boolean> {
+    try {
+      const requestOnline = "CALL artemis.get.onlineMode()";
+      const requestPythia = "CALL artemis.get.pythiaMode()";
+
+      const results = await this.neo4jAl.execute(requestOnline);
+      if (!results.records || results.records.length == 0)
+        throw new Error("Results not correctly formatted for CALL artemis.get.onlineMode()");
+
+      if(Boolean(results.records[0].get(0))) return false; 
+
+      const results2 = await this.neo4jAl.execute(requestPythia);
+      if (!results2.records || results2.records.length == 0)
+        throw new Error("Results not correctly formatted for CALL artemis.get.pythiaMode()");
+
+      if(Boolean(results2.records[0].get(0))) return false; 
+     
+
+      return true; // All the parameters are turned off
+    } catch (err) {
+      logger.error("Failed to set internal mode ...", err);
+      throw new HttpException(500, "Internal error");
+    }
+  }
 }
 
 export default ConfigurationService;

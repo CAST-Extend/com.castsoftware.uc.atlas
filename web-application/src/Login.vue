@@ -47,8 +47,9 @@
           <div>
             <p class="mt-2 text-subtitle-1">Options :</p>
             <v-switch
-              v-model="switchIternalUse"
+              v-model="switchInternalUse"
               label="Internal use ( CAST User )"
+              @change="setInternalMode"
             ></v-switch>
           </div>
         </v-card-text>
@@ -68,6 +69,7 @@ import { Vue } from "vue-property-decorator";
 import { Configuration, Credentials } from "@/Configuration";
 import { Neo4JAccessLayer } from "./api/Neo4jAccessLayer";
 import { ServerInfo } from "neo4j-driver";
+import ConfigurationController from "./api/configuration/configuration.controller";
 
 export default Vue.extend({
   name: "Login",
@@ -79,8 +81,12 @@ export default Vue.extend({
     uri: Configuration.getProperties().neo4jUri,
     credentials: {} as Credentials,
 
-    switchIternalUse: false
+    switchInternalUse: false
   }),
+
+  mounted() {
+    this.getInternalMode()
+  },
 
   methods: {
     // Check, save and redirect to the Main dashboard
@@ -108,7 +114,28 @@ export default Vue.extend({
           console.error("Cannot connect to Neo4j", err);
           this.failedLogin = true;
         });
+    },
+
+    // Set Internal mode
+    async setInternalMode() {
+      await ConfigurationController.setInternalMode(!this.switchInternalUse).then((res:boolean) => {
+        console.log("Internal mode was changed to ", res);
+      }).catch((err) => {
+        console.error("Failed to set internal mode to ", err);
+      });
+    },
+
+    // Get Intrenal mode
+    getInternalMode() {
+      ConfigurationController.getInternalMode().then((res:boolean) => {
+        this.switchInternalUse = res;
+      }).catch((err) => {
+        console.log("Failed to change the value of internal mode.", err);
+        this.switchInternalUse = false;
+      });
     }
+
+
   }
 });
 </script>

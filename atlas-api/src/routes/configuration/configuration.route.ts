@@ -21,6 +21,9 @@ class ConfigurationRoute implements Route {
 
       this.router.get(`${this.path}/artemis/workspace`, this.configController.getArtemisWorkspace);
       this.router.post(`${this.path}/artemis/workspace`, this.configController.setArtemisWorkspace);
+      this.router.get(`${this.path}/artemis/internalMode`, this.configController.getInternalMode);
+      this.router.post(`${this.path}/artemis/internalMode`, this.configController.setInternalMode);
+
       this.router.get(`${this.path}/demeter/workspace`, this.configController.getDemeterWorkspace);
       this.router.post(`${this.path}/demeter/workspace`, this.configController.setDemeterWorkspace);
     }

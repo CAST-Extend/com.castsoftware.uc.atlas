@@ -161,6 +161,53 @@ export default class ConfigurationController {
     }
   }
 
+  public static async setInternalMode(
+    value: boolean
+  ): Promise<boolean> {
+    const url =
+      ConfigurationController.API_BASE_URL +
+      `/api/configuration/parameters/artemis/internalMode`;
+
+    try {
+      const res = await axios.post(url, { value: value });
+
+      if (res.status == 200 || res.status == 304) {
+        const apiResponse: ApiResponse = res.data;
+        return Boolean(apiResponse.data);
+      } else {
+        throw new Error(
+          `Failed to set the internalMode of Artemis. Status (${res.status})`
+        );
+      }
+    } catch (error) {
+      console.error(`Failed to reach the API : ${url}.`, error);
+      throw error;
+    }
+  }
+
+  public static async getInternalMode(): Promise<boolean> {
+    const url =
+      ConfigurationController.API_BASE_URL +
+      `/api/configuration/parameters/artemis/internalMode`;
+
+    try {
+      const res = await axios.get(url);
+
+      if (res.status == 200 || res.status == 304) {
+        const apiResponse: ApiResponse = res.data;
+        return Boolean(apiResponse.data);
+      } else {
+        throw new Error(
+          `Failed to retrieve the internalMode of Artemis. Status (${res.status})`
+        );
+      }
+    } catch (error) {
+      console.error(`Failed to reach the API : ${url}.`, error);
+      throw error;
+    }
+  }
+
+
   public static async setDemeterWorkspace(
     newWorkspace: string
   ): Promise<string> {

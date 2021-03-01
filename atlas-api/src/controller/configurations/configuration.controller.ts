@@ -107,6 +107,33 @@ class ConfigurationController {
       next(error);
     }
   };
+
+  public getInternalMode = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const status: boolean = await this.configurationService.getInternalMode();
+      res.status(200).json({ data: status, message: "Internal Mode" });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public setInternalMode = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const value = Boolean(req.body.value);
+      const status: boolean = await this.configurationService.setInternalMode(value);
+      res.status(200).json({ data: status, message: "Internal Mode" });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default ConfigurationController;
